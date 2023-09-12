@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Test;
 class SimpleEntityRepositoryImplTest {
 
     //создаем здесь testcontainer
-//    @Container
-//    public static final PostgreSQLContainer<?> container =
-//            new PostgreSQLContainer<>("postgres:15")
-//                    .withDatabaseName("test")
-//                    .withUsername("test")
-//                    .withInitScript("db-migration.SQL")
-//                    .withPassword("test");
-
+  /*  @Container
+    public static final PostgreSQLContainer<?> container =
+            new PostgreSQLContainer<>("postgres:15")
+                   .withDatabaseName("test")
+                    .withUsername("test")
+                    .withInitScript("db-migration.SQL")
+                    .withPassword("test");
+*/
     @Test
     void findById() {
     }
