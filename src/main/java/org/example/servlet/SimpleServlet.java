@@ -1,31 +1,54 @@
 package org.example.servlet;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.example.model.SimpleEntity;
 import org.example.service.SimpleService;
+import org.example.service.impl.SimpleServiceImpl;
 import org.example.servlet.dto.IncomingDto;
 import org.example.servlet.dto.OutGoingDto;
 import org.example.servlet.mapper.SimpleDtomapper;
+import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.UUID;
 
 
 @WebServlet(name = "SimpleServlet", value = "/simple")
 public class SimpleServlet extends HttpServlet {
-    private SimpleService service;
+    private SimpleService service=new SimpleServiceImpl();
     private SimpleDtomapper dtomapper;
+    private Gson gson = new Gson();
+
+    private void sendAsJson(
+            HttpServletResponse response,
+            Object obj) throws IOException {
+
+        response.setContentType("application/json");
+
+        String res = gson.toJson(obj);
+
+        PrintWriter out = response.getWriter();
+
+        out.print(res);
+        out.flush();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UUID uuid = UUID.randomUUID();// Our Id from request
+       /* resp.setContentType("text/html");
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.write("Hello!");
+        printWriter.close();
+        http://localhost:8080/simple?uuid=2382018b-7959-4bc0-b821-2188f6307ffb*/
+        UUID uuid = UUID.fromString(req.getParameter("uuid"));
         SimpleEntity byId = service.findById(uuid);
-        OutGoingDto outGoingDto = dtomapper.map(byId);
-        // return our DTO
+        sendAsJson(resp, byId);
+
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.example.servlet.dto.OutGoingDto;
 public class SimpleDtomapperImpl implements SimpleDtomapper {
     @Override
     public SimpleEntity map(IncomingDto incomingDto) {
+
         return null;
     }
 
