@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.example.model.SimpleEntity;
 import org.example.service.SimpleService;
 import org.example.service.impl.SimpleServiceImpl;
@@ -15,12 +16,14 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
 @WebServlet(name = "SimpleServlet", value = "/simple")
 public class SimpleServlet extends HttpServlet {
-    private SimpleService service=new SimpleServiceImpl();
+    private SimpleService service = new SimpleServiceImpl();
     private SimpleDtomapper dtomapper;
     private Gson gson = new Gson();
 
@@ -45,11 +48,15 @@ public class SimpleServlet extends HttpServlet {
         printWriter.write("Hello!");
         printWriter.close();
         http://localhost:8080/simple?uuid=2382018b-7959-4bc0-b821-2188f6307ffb*/
-        UUID uuid = UUID.fromString(req.getParameter("uuid"));
-        SimpleEntity byId = service.findById(uuid);
-        sendAsJson(resp, byId);
-
-    }
+        List<SimpleEntity> entityList = new ArrayList<>();
+        if (req.getParameterMap() != null) {
+            UUID uuid = UUID.fromString(req.getParameter("uuid"));
+            SimpleEntity byId = service.findById(uuid);
+            sendAsJson(resp, byId);
+        } else
+            entityList = service.findAll();
+            sendAsJson(resp, entityList);
+ }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

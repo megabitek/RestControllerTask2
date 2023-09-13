@@ -30,7 +30,8 @@ public class SimpleServiceImpl implements SimpleService {
 
     @Override
     public List<SimpleEntity> findAll() {
-        return null;
+        List<SimpleEntity> all = repository.findAll();
+        return all; 
     }
 
     @Override
