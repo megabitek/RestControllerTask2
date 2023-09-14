@@ -69,9 +69,10 @@ public class SimpleEntityRepositoryImpl implements SimpleEntityRepository {
     public SimpleEntity save(SimpleEntity simpleEntity) {
         try {
             Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into simple_entity values(1, 2)");
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into simple_entity (uuid, name) values(?, ?)");
             preparedStatement.setObject(1, simpleEntity.getUuid());
             preparedStatement.setString(2, simpleEntity.getName());
+            preparedStatement.execute();
             return simpleEntity;
         } catch (SQLException | ClassNotFoundException e) {
             return null;

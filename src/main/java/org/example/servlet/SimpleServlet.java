@@ -14,6 +14,7 @@ import org.example.servlet.dto.OutGoingDto;
 import org.example.servlet.mapper.SimpleDtomapper;
 import com.google.gson.Gson;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -42,27 +43,59 @@ public class SimpleServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       /* resp.setContentType("text/html");
-        PrintWriter printWriter = resp.getWriter();
-        printWriter.write("Hello!");
-        printWriter.close();
-        http://localhost:8080/simple?uuid=2382018b-7959-4bc0-b821-2188f6307ffb*/
+    /**Find one
+     * fetch('/simple?'+ new URLSearchParams({
+     *     uuid: '2382018b-7959-4bc0-b821-2188f6307ffb'})).then(response=>response.json())*
+     *
+     * Find all
+     *    fetch('/simple').then(response => response.json().then(console.log))
+     *
+     **/
+
+     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         List<SimpleEntity> entityList = new ArrayList<>();
-        if (req.getParameterMap() != null) {
+        if (req.getParameterMap().size()>0) {
             UUID uuid = UUID.fromString(req.getParameter("uuid"));
             SimpleEntity byId = service.findById(uuid);
             sendAsJson(resp, byId);
-        } else
+        } else{
             entityList = service.findAll();
             sendAsJson(resp, entityList);
- }
+ }}
 
+
+/**add new element
+ * fetch(
+ *   '/simple',
+ *   {
+ *     method: 'POST',
+ *     headers: { 'Content-Type': 'application/json' },
+ *     body: JSON.stringify({  uuid:'2382018b-7959-4bc0-b821-2188f6307ffb',
+ *    name:'dasha' })
+ *   }
+ * ).then(result=>result.json())*/
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SimpleEntity simpleEntity = dtomapper.map(new IncomingDto());
-        SimpleEntity saved = service.save(simpleEntity);
-        OutGoingDto map = dtomapper.map(saved);
+        BufferedReader reader = req.getReader();
+        StringBuilder buffer = new StringBuilder();
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            buffer.append(line);}
+        String payload = buffer.toString();
+        SimpleEntity entity = gson.fromJson(payload, SimpleEntity.class);
+
+       // SimpleEntity simpleEntity = dtomapper.map(new IncomingDto());
+        SimpleEntity saved = service.save(entity);
+        sendAsJson(resp, saved);
+        //OutGoingDto map = dtomapper.map(saved);
         // return our DTO, not necessary
     }
-}
+
+    @Override
+protected  void doPut(HttpServletRequest request,
+    HttpServletResponse response)
+            throws IOException, ServletException {
+
+    }}
