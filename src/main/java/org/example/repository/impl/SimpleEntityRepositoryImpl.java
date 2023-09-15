@@ -66,9 +66,8 @@ public class SimpleEntityRepositoryImpl implements SimpleEntityRepository {
     @Override
     public SimpleEntity save(SimpleEntity simpleEntity) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into simple_entity (uuid, name) values(?, ?)");
-            preparedStatement.setObject(1, simpleEntity.getUuid());
-            preparedStatement.setString(2, simpleEntity.getName());
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into simple_entity ( name) values( ?)");
+            preparedStatement.setString(1, simpleEntity.getName());
             preparedStatement.executeQuery();
             return simpleEntity;
         } catch (SQLException  e) {

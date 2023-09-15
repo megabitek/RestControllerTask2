@@ -2,7 +2,7 @@ package org.example.repository;
 
 import java.util.List;
 
-public interface SimpleRepository<T, K> {
+public interface EntityRepository<T, K> {
     T findById(K id);
 
     boolean deleteById(K id);

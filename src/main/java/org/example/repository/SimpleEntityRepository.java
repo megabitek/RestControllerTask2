@@ -5,7 +5,7 @@ import org.example.model.SimpleEntity;
 import java.util.List;
 import java.util.UUID;
 
-public interface SimpleEntityRepository extends SimpleRepository<SimpleEntity, UUID>{
+public interface SimpleEntityRepository extends EntityRepository<SimpleEntity, UUID>{
 
     @Override
     public SimpleEntity findById(UUID id) ;
