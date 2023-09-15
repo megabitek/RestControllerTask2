@@ -14,5 +14,5 @@ public interface SimpleService {
 
     List<SimpleEntity> findAll();
 
-    SimpleEntity update(UUID uuid);
+    SimpleEntity update(SimpleEntity simpleEntity);
 }

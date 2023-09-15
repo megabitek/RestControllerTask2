@@ -5,6 +5,8 @@ import org.example.repository.SimpleEntityRepository;
 import org.example.repository.impl.SimpleEntityRepositoryImpl;
 import org.example.service.SimpleService;
 
+import java.util.HashMap;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -25,18 +27,23 @@ public class SimpleServiceImpl implements SimpleService {
 
     @Override
     public SimpleEntity delete(UUID uuid) {
-        return null;
+        SimpleEntity entity = repository.findById(uuid);
+        if (repository.deleteById(uuid)){
+            return entity;
+        }
+        else return null;
     }
 
     @Override
     public List<SimpleEntity> findAll() {
         List<SimpleEntity> all = repository.findAll();
-        return all; 
+        return all;
     }
 
     @Override
-    public SimpleEntity update(UUID uuid) {
-        return null;
+    public SimpleEntity update(SimpleEntity simpleEntity) {
+        SimpleEntity entity = repository.update(simpleEntity);
+        return simpleEntity;
     }
 
 

@@ -25,6 +25,7 @@ import java.util.UUID;
 @WebServlet(name = "SimpleServlet", value = "/simple")
 public class SimpleServlet extends HttpServlet {
     private SimpleService service = new SimpleServiceImpl();
+
     private SimpleDtomapper dtomapper;
     private Gson gson = new Gson();
 
@@ -74,7 +75,7 @@ public class SimpleServlet extends HttpServlet {
  *     body: JSON.stringify({  uuid:'2382018b-7959-4bc0-b821-2188f6307ffb',
  *    name:'dasha' })
  *   }
- * ).then(result=>result.json())*/
+ * ).then(result=>result.json()).then(consol.log())*/
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader reader = req.getReader();
@@ -92,10 +93,31 @@ public class SimpleServlet extends HttpServlet {
         //OutGoingDto map = dtomapper.map(saved);
         // return our DTO, not necessary
     }
-
+/**
+ * fetch('/simple?'+new URLSearchParams({
+ *           uuid: '2382018b-7959-4bc0-b821-2188f6307ffb', name: 'Kolya'}),
+ *           { method: 'PUT' }).then(result => console.log(result))*/
     @Override
 protected  void doPut(HttpServletRequest request,
     HttpServletResponse response)
             throws IOException, ServletException {
+        UUID uuid = UUID.fromString(request.getParameter("uuid"));
+        SimpleEntity ent_update = service.findById(uuid);
+        ent_update.setName(request.getParameter("name"));
+        SimpleEntity updated=service.update(ent_update);
+        sendAsJson(response, updated);
+    }
 
-    }}
+    /***fetch('/simple?'+new URLSearchParams({uuid: '2382018b-7959-4bc0-b821-2188f6307ffb'}),
+     * { method: 'DELETE' })
+     * .then(result => console.log(result))
+     */
+    @Override
+    protected void doDelete(HttpServletRequest request,
+                            HttpServletResponse response){
+    UUID uuid = UUID.fromString(request.getParameter("uuid"));
+    service.delete(uuid);
+
+    }
+
+}

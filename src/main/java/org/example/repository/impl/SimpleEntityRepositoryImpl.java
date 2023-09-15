@@ -16,7 +16,9 @@ import java.util.UUID;
 
 public class SimpleEntityRepositoryImpl implements SimpleEntityRepository {
     private SimpleResultSetMapper resultSetMapper= new SimpleResultSetMapperImpl();
-    private ConnectionManager connectionManager = new PostrgreSQLConnection();
+    private Connection connection = new PostrgreSQLConnection().getConnection();
+
+
 
     @Override
     public SimpleEntity findById(UUID uuid) {
@@ -24,13 +26,11 @@ public class SimpleEntityRepositoryImpl implements SimpleEntityRepository {
 
 
         try {
-            Connection connection = connectionManager.getConnection();
+
             PreparedStatement preparedStatement = connection.prepareStatement("select * from simple_entity where uuid = ?");
             preparedStatement.setObject(1, uuid);
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSetMapper.map(resultSet);
-        } catch (ClassNotFoundException e) {
-            return null;
         } catch (SQLException e) {
             return null;
         }
@@ -40,27 +40,25 @@ public class SimpleEntityRepositoryImpl implements SimpleEntityRepository {
     public boolean deleteById(UUID uuid) {
 
         try {
-            Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from simple_entity where uuid = ?");
+
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from simple_entity where uuid = ?");
+            preparedStatement.setObject(1, uuid);
+            preparedStatement.executeQuery();
             return true;
         } catch (SQLException e) {
             return false;
-        } catch (ClassNotFoundException e) {
-            return false;
 
-        }
 
-    }
+    }}
 
     @Override
     public List<SimpleEntity> findAll() {
 
         try {
-            Connection connection = connectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("select * from simple_entity");
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSetMapper.mapList(resultSet);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException   e) {
             return null;
         }
     }
@@ -68,14 +66,27 @@ public class SimpleEntityRepositoryImpl implements SimpleEntityRepository {
     @Override
     public SimpleEntity save(SimpleEntity simpleEntity) {
         try {
-            Connection connection = connectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("insert into simple_entity (uuid, name) values(?, ?)");
             preparedStatement.setObject(1, simpleEntity.getUuid());
             preparedStatement.setString(2, simpleEntity.getName());
-            preparedStatement.execute();
+            preparedStatement.executeQuery();
             return simpleEntity;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             return null;
         }
     }
+
+    @Override
+    public SimpleEntity update(SimpleEntity simpleEntity){
+        try {
+        PreparedStatement preparedStatement = connection.prepareStatement("update simple_entity set name= ? where uuid = ?");
+        preparedStatement.setString(1, simpleEntity.getName());
+        preparedStatement.setObject(2, simpleEntity.getUuid());
+        preparedStatement.execute();
+        return simpleEntity;
+        } catch (SQLException  e) {
+            return null;
+        }
+    }
+
 }
