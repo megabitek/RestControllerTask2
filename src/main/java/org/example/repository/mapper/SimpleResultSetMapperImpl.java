@@ -42,9 +42,7 @@ public class SimpleResultSetMapperImpl implements SimpleResultSetMapper {
         try {
             String name = resultSet.getString("name");
             UUID uuid = (UUID) resultSet.getObject("uuid");
-            SimpleEntity simpleEntity = new SimpleEntity();
-            simpleEntity.setUuid(uuid);
-            simpleEntity.setName(name);
+            SimpleEntity simpleEntity = new SimpleEntity(uuid,name );
             return simpleEntity;
         } catch (SQLException e) {
             return null;

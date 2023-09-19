@@ -9,15 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.example.model.SimpleEntity;
 import org.example.service.SimpleService;
 import org.example.service.impl.SimpleServiceImpl;
+import org.example.servlet.dto.IDto;
 import org.example.servlet.dto.IncomingDto;
 import org.example.servlet.dto.OutGoingDto;
+import org.example.servlet.mapper.SimpleDtoMapperImpl;
 import org.example.servlet.mapper.SimpleDtomapper;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,16 +27,16 @@ import java.util.UUID;
 public class SimpleServlet extends HttpServlet {
     private SimpleService service = new SimpleServiceImpl();
 
-    private SimpleDtomapper dtomapper;
+    private final SimpleDtomapper dtoMapper=new SimpleDtoMapperImpl();
     private Gson gson = new Gson();
 
     private void sendAsJson(
             HttpServletResponse response,
-            Object obj) throws IOException {
+            Object dto) throws IOException {
 
         response.setContentType("application/json");
 
-        String res = gson.toJson(obj);
+        String res = gson.toJson(dto);
 
         PrintWriter out = response.getWriter();
 
@@ -46,7 +47,7 @@ public class SimpleServlet extends HttpServlet {
     @Override
     /**Find one
      * fetch('/simple?'+ new URLSearchParams({
-     *     uuid: '2382018b-7959-4bc0-b821-2188f6307ffb'})).then(response=>response.json())*
+     *     id: '2382018b-7959-4bc0-b821-2188f6307ffb'})).then(response=>response.json())*
      *
      * Find all
      *    fetch('/simple').then(response => response.json().then(console.log))
@@ -55,15 +56,18 @@ public class SimpleServlet extends HttpServlet {
 
      protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<SimpleEntity> entityList = new ArrayList<>();
+        List<SimpleEntity> entityList;
         if (req.getParameterMap().size()>0) {
-            UUID uuid = UUID.fromString(req.getParameter("uuid"));
-            SimpleEntity byId = service.findById(uuid);
-            sendAsJson(resp, byId);
+            UUID id = UUID.fromString(req.getParameter("id"));
+            OutGoingDto map  =  dtoMapper.map(service.findById(id));
+            sendAsJson(resp, map);
         } else{
-            entityList = service.findAll();
-            sendAsJson(resp, entityList);
- }}
+            List<OutGoingDto> listDto = dtoMapper.mapListOut(service.findAll());
+              sendAsJson(resp, listDto);
+            }
+
+ }
+
 
 
 /**add new element
@@ -72,10 +76,9 @@ public class SimpleServlet extends HttpServlet {
  *   {
  *     method: 'POST',
  *     headers: { 'Content-Type': 'application/json' },
- *     body: JSON.stringify({  uuid:'2382018b-7959-4bc0-b821-2188f6307ffb',
- *    name:'dasha' })
+ *     body: JSON.stringify({  owner:'dasha' })
  *   }
- * ).then(result=>result.json()).then(consol.log())*/
+ * ).then(result=>result.json())*/
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader reader = req.getReader();
@@ -85,37 +88,42 @@ public class SimpleServlet extends HttpServlet {
         while ((line = reader.readLine()) != null) {
             buffer.append(line);}
         String payload = buffer.toString();
-        SimpleEntity entity = gson.fromJson(payload, SimpleEntity.class);
+        IncomingDto dto = gson.fromJson(payload, IncomingDto.class);
 
-       // SimpleEntity simpleEntity = dtomapper.map(new IncomingDto());
+        SimpleEntity entity = dtoMapper.map(dto);
+
         SimpleEntity saved = service.save(entity);
-        sendAsJson(resp, saved);
+
+        OutGoingDto outDto = dtoMapper.map(saved);
+
+        sendAsJson(resp, outDto);
         //OutGoingDto map = dtomapper.map(saved);
         // return our DTO, not necessary
     }
 /**
  * fetch('/simple?'+new URLSearchParams({
- *           uuid: '2382018b-7959-4bc0-b821-2188f6307ffb', name: 'Kolya'}),
+ *           id: '2382018b-7959-4bc0-b821-2188f6307ffb', owner: 'Kolya'}),
  *           { method: 'PUT' }).then(result => console.log(result))*/
     @Override
 protected  void doPut(HttpServletRequest request,
     HttpServletResponse response)
             throws IOException, ServletException {
-        UUID uuid = UUID.fromString(request.getParameter("uuid"));
-        SimpleEntity ent_update = service.findById(uuid);
-        ent_update.setName(request.getParameter("name"));
-        SimpleEntity updated=service.update(ent_update);
-        sendAsJson(response, updated);
+        UUID uuid = UUID.fromString(request.getParameter("id"));
+        IncomingDto in = new IncomingDto();
+        in.setId(UUID.fromString(request.getParameter("id")));
+        in.setOwner(request.getParameter("owner"));
+        OutGoingDto outDto=dtoMapper.map(service.update(dtoMapper.map(in)));
+        sendAsJson(response, outDto);
     }
 
-    /***fetch('/simple?'+new URLSearchParams({uuid: '2382018b-7959-4bc0-b821-2188f6307ffb'}),
+    /***fetch('/simple?'+new URLSearchParams({id: '2382018b-7959-4bc0-b821-2188f6307ffb'}),
      * { method: 'DELETE' })
      * .then(result => console.log(result))
      */
     @Override
     protected void doDelete(HttpServletRequest request,
                             HttpServletResponse response){
-    UUID uuid = UUID.fromString(request.getParameter("uuid"));
+    UUID uuid = UUID.fromString(request.getParameter("id"));
     service.delete(uuid);
 
     }

@@ -6,6 +6,7 @@ import org.example.model.SimpleEntity;
 import org.example.service.impl.SimpleServiceImpl;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,12 +31,14 @@ System.out.println(id+ " "+ name);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }*/
-        SimpleEntity ent = new SimpleEntity();
+      /*  SimpleEntity ent = new SimpleEntity();
         ent.setName("dasha");
         ent.setUuid(UUID.randomUUID());
         SimpleServiceImpl repo = new SimpleServiceImpl();
         repo.save(ent);
         SimpleEntity saveEnt= repo.findById(ent.getUuid());
-        System.out.println(saveEnt.getUuid()+ " "+ saveEnt.getName());
+        System.out.println(saveEnt.getUuid()+ " "+ saveEnt.getName());*/
+
+
     }
 }

@@ -2,7 +2,7 @@ package org.example.model;
 
 import java.util.UUID;
 
-public class AnotherEntyty {
+public class AnotherEntity {
 
     UUID uuid;
     String name;

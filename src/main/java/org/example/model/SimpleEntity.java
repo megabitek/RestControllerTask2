@@ -7,15 +7,22 @@ public class SimpleEntity {
     UUID uuid;
     String name;
 
-    public List<AnotherEntyty> getAnothers() {
+    List<AnotherEntity> anothers;
+
+    public SimpleEntity(UUID uuid, String name) {
+        this.uuid = uuid;
+        this.name = name;
+    }
+
+    public List<AnotherEntity> getAnothers() {
         return anothers;
     }
 
-    public void setAnothers(List<AnotherEntyty> anothers) {
+    public void setAnothers(List<AnotherEntity> anothers) {
         this.anothers = anothers;
     }
 
-    List<AnotherEntyty> anothers;
+
 
     public UUID getUuid() {
         return uuid;
