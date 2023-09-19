@@ -31,4 +31,9 @@ public class AnotherEntityRepositoryImpl  implements AnotherEntityRepository {
     public AnotherEntity update(AnotherEntity anotherEntity) {
         return null;
     }
+
+    @Override
+    public List getChild(UUID id) {
+        return null;
+    }
 }

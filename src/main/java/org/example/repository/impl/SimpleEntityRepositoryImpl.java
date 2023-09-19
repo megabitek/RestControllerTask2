@@ -1,9 +1,10 @@
 package org.example.repository.impl;
 
-import org.example.db.ConnectionManager;
 import org.example.db.PostrgreSQLConnection;
+import org.example.model.AnotherEntity;
 import org.example.model.SimpleEntity;
 import org.example.repository.SimpleEntityRepository;
+import org.example.repository.mapper.AnotherResultSetMapperImpl;
 import org.example.repository.mapper.SimpleResultSetMapper;
 import org.example.repository.mapper.SimpleResultSetMapperImpl;
 
@@ -14,8 +15,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-public class SimpleEntityRepositoryImpl implements SimpleEntityRepository {
-    private SimpleResultSetMapper resultSetMapper= new SimpleResultSetMapperImpl();
+public class SimpleEntityRepositoryImpl implements SimpleEntityRepository<SimpleEntity> {
+    private SimpleResultSetMapper simpleResultSetMapper = new SimpleResultSetMapperImpl();
+    private SimpleResultSetMapper anotherResultSetMapper= new AnotherResultSetMapperImpl();
     private Connection connection = new PostrgreSQLConnection().getConnection();
 
 
@@ -30,7 +32,7 @@ public class SimpleEntityRepositoryImpl implements SimpleEntityRepository {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from simple_entity where uuid = ?");
             preparedStatement.setObject(1, uuid);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSetMapper.map(resultSet);
+            return (SimpleEntity) simpleResultSetMapper.map(resultSet);
         } catch (SQLException e) {
             return null;
         }
@@ -57,7 +59,7 @@ public class SimpleEntityRepositoryImpl implements SimpleEntityRepository {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from simple_entity");
             ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSetMapper.mapList(resultSet);
+            return simpleResultSetMapper.mapList(resultSet);
         } catch (SQLException   e) {
             return null;
         }
@@ -83,6 +85,22 @@ public class SimpleEntityRepositoryImpl implements SimpleEntityRepository {
         preparedStatement.setObject(2, simpleEntity.getUuid());
         preparedStatement.execute();
         return simpleEntity;
+        } catch (SQLException  e) {
+            return null;
+        }
+    }
+
+
+    @Override
+    public List<AnotherEntity> getChild(UUID uuid) {
+        try {
+            try (PreparedStatement preparedStatement = connection.prepareStatement("select name, uuid from anothers where simple_uuid =?")) {
+                preparedStatement.setObject(1, uuid);
+                preparedStatement.execute();
+                ResultSet resultSet = preparedStatement.executeQuery();
+                return anotherResultSetMapper.mapList(resultSet);
+            }
+
         } catch (SQLException  e) {
             return null;
         }

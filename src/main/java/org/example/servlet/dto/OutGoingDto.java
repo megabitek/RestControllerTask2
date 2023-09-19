@@ -2,7 +2,7 @@ package org.example.servlet.dto;
 
 import java.util.UUID;
 
-public class OutGoingDto implements IDto{
+public class OutGoingDto {
     private UUID id;
     private String owner;
 

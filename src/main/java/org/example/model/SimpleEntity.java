@@ -1,5 +1,6 @@
 package org.example.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -7,22 +8,28 @@ public class SimpleEntity {
     UUID uuid;
     String name;
 
-    List<AnotherEntity> anothers;
+    List<AnotherEntity> others;
+
+    public SimpleEntity() {
+        others = new ArrayList<AnotherEntity>(); 
+    }
 
     public SimpleEntity(UUID uuid, String name) {
         this.uuid = uuid;
         this.name = name;
     }
 
-    public List<AnotherEntity> getAnothers() {
-        return anothers;
+    public List<AnotherEntity> getOthers() {
+        return others;
     }
 
-    public void setAnothers(List<AnotherEntity> anothers) {
-        this.anothers = anothers;
+    public void setOthers(List<AnotherEntity> others) {
+        this.others = others;
     }
 
-
+public void addAnother( AnotherEntity another){
+        others.add(another); 
+}
 
     public UUID getUuid() {
         return uuid;

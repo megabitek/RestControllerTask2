@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.example.model.SimpleEntity;
 import org.example.service.SimpleService;
 import org.example.service.impl.SimpleServiceImpl;
-import org.example.servlet.dto.IDto;
 import org.example.servlet.dto.IncomingDto;
 import org.example.servlet.dto.OutGoingDto;
 import org.example.servlet.mapper.SimpleDtoMapperImpl;

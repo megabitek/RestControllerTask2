@@ -5,14 +5,12 @@ import org.example.repository.SimpleEntityRepository;
 import org.example.repository.impl.SimpleEntityRepositoryImpl;
 import org.example.service.SimpleService;
 
-import java.util.HashMap;
-
 import java.util.List;
 import java.util.UUID;
 
 public class SimpleServiceImpl implements SimpleService {
 
-    SimpleEntityRepository repository = new SimpleEntityRepositoryImpl();
+    SimpleEntityRepository<SimpleEntity> repository = new SimpleEntityRepositoryImpl();
 
     @Override
     public SimpleEntity save(SimpleEntity simpleEntity) {
