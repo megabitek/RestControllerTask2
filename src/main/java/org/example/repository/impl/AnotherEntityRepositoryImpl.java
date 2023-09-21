@@ -2,11 +2,15 @@ package org.example.repository.impl;
 
 import org.example.model.AnotherEntity;
 import org.example.repository.AnotherEntityRepository;
+import org.example.repository.mapper.AnotherResultSetMapperImpl;
+import org.example.repository.mapper.IResultSetMapper;
 
 import java.util.List;
 import java.util.UUID;
 
 public class AnotherEntityRepositoryImpl  implements AnotherEntityRepository {
+
+    private IResultSetMapper anotherResultSetMapper = new AnotherResultSetMapperImpl();
     @Override
     public AnotherEntity findById(UUID id) {
         return null;
@@ -32,8 +36,5 @@ public class AnotherEntityRepositoryImpl  implements AnotherEntityRepository {
         return null;
     }
 
-    @Override
-    public List getChild(UUID id) {
-        return null;
-    }
+
 }

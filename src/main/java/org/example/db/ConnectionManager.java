@@ -4,5 +4,5 @@ import java.sql.SQLException;
 
 public interface ConnectionManager {
 
-     Connection getConnection() throws SQLException, ClassNotFoundException;
+     Connection getConnection(String url, String user, String password) throws SQLException, ClassNotFoundException;
 }

@@ -6,14 +6,17 @@ import java.sql.DriverManager;
 
 public class PostrgreSQLConnection implements ConnectionManager {
 
+   /* public String url="jdbc:postgresql://localhost:5432/mydatabase";
+    public String user= "postgres";
+    public String password ="1234" ;*/
     private static Connection connection;
 
-    private Connection createConnection() {
+    private Connection createConnection(String url, String user, String password) {
         try {
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager
-                    .getConnection("jdbc:postgresql://localhost:5432/mydatabase",
-                            "postgres", "1234");
+                    .getConnection(url,
+                            user, password);
             return connection;
         } catch (SQLException|ClassNotFoundException e) {
             return null;
@@ -21,12 +24,12 @@ public class PostrgreSQLConnection implements ConnectionManager {
 
     }
 
-    ;
+
 
     @Override
-    public  Connection getConnection() {
+    public  Connection getConnection(String url, String user, String password) {
         if (connection == null)
-            return createConnection();
+            return createConnection(url, user, password);
         return connection;
     }
 

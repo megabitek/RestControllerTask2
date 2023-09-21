@@ -22,6 +22,6 @@ public interface SimpleEntityRepository<S> extends EntityRepository<SimpleEntity
 
     public SimpleEntity update(SimpleEntity simpleEntity);
 
-    public List<AnotherEntity> getChild(UUID uuid);
+
 
 }

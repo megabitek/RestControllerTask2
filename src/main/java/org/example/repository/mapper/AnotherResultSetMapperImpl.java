@@ -1,14 +1,12 @@
 package org.example.repository.mapper;
 
 import org.example.model.AnotherEntity;
-import org.example.model.SimpleEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.UUID;
 
-public class AnotherResultSetMapperImpl implements SimpleResultSetMapper<AnotherEntity> {
+public class AnotherResultSetMapperImpl implements IResultSetMapper<AnotherEntity> {
 
 
     @Override

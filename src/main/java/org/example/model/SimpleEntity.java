@@ -14,6 +14,11 @@ public class SimpleEntity {
         others = new ArrayList<AnotherEntity>(); 
     }
 
+    public SimpleEntity(String name) {
+    uuid = UUID.randomUUID();
+    this.name = name;
+    }
+
     public SimpleEntity(UUID uuid, String name) {
         this.uuid = uuid;
         this.name = name;

@@ -1,14 +1,11 @@
 package org.example.repository.mapper;
 
-import org.example.model.SimpleEntity;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-public interface SimpleResultSetMapper<T> {
+public interface IResultSetMapper<T> {
 
 
      default  T map(ResultSet resultSet) {

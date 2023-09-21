@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.example.model.SimpleEntity;
 import org.example.service.SimpleService;
 import org.example.service.impl.SimpleServiceImpl;
-import org.example.servlet.dto.IncomingDto;
+import org.example.servlet.dto.IncomingDtoSimple;
 import org.example.servlet.dto.OutGoingDto;
 import org.example.servlet.mapper.SimpleDtoMapperImpl;
 import org.example.servlet.mapper.SimpleDtomapper;
@@ -87,7 +87,7 @@ public class SimpleServlet extends HttpServlet {
         while ((line = reader.readLine()) != null) {
             buffer.append(line);}
         String payload = buffer.toString();
-        IncomingDto dto = gson.fromJson(payload, IncomingDto.class);
+        IncomingDtoSimple dto = gson.fromJson(payload, IncomingDtoSimple.class);
 
         SimpleEntity entity = dtoMapper.map(dto);
 
@@ -108,7 +108,7 @@ protected  void doPut(HttpServletRequest request,
     HttpServletResponse response)
             throws IOException, ServletException {
         UUID uuid = UUID.fromString(request.getParameter("id"));
-        IncomingDto in = new IncomingDto();
+        IncomingDtoSimple in = new IncomingDtoSimple();
         in.setId(UUID.fromString(request.getParameter("id")));
         in.setOwner(request.getParameter("owner"));
         OutGoingDto outDto=dtoMapper.map(service.update(dtoMapper.map(in)));

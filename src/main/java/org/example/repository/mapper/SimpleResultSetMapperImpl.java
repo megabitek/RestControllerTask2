@@ -4,11 +4,9 @@ import org.example.model.SimpleEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-public class SimpleResultSetMapperImpl implements SimpleResultSetMapper<SimpleEntity> {
+public class SimpleResultSetMapperImpl implements IResultSetMapper<SimpleEntity> {
 
 
     public SimpleEntity createEntity(ResultSet resultSet) {

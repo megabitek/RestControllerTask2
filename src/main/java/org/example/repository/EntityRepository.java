@@ -13,5 +13,4 @@ public interface EntityRepository<T, K> {
 
     T update(T t);
 
-    List getChild(K id);
 }
