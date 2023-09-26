@@ -13,13 +13,17 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
 class SimpleEntityRepositoryImplTest {
 
+    public static final String UUID = "76bde8dd-f961-4653-85f5-bcdc4ac171f0";
     @Mock
     SimpleEntityRepositoryImpl repository= new SimpleEntityRepositoryImpl();
+
+
 
     @Container
     @InjectMocks
@@ -51,13 +55,16 @@ class SimpleEntityRepositoryImplTest {
     }
     @Test
     void findById() {
-Assert.assertNotNull(repository.findById(UUID.fromString("76bde8dd-f961-4653-85f5-bcdc4ac171f0")));
+        SimpleEntity found = repository.findById(java.util.UUID.fromString(UUID));
+        Assert.assertNotNull(found);
     }
+
+
 
     @Test
     void deleteById() {
-        if (repository.findById(UUID.fromString("76bde8dd-f961-4653-85f5-bcdc4ac171f0")) !=null)
-        Assert.assertTrue(repository.deleteById(UUID.fromString("76bde8dd-f961-4653-85f5-bcdc4ac171f0")));
+        if (repository.findById(java.util.UUID.fromString(UUID)) !=null)
+        Assert.assertTrue(repository.deleteById(java.util.UUID.fromString(UUID)));
     }
 
     @Test

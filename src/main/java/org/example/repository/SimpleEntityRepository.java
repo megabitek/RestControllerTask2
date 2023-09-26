@@ -1,12 +1,12 @@
 package org.example.repository;
 
-import org.example.model.AnotherEntity;
 import org.example.model.SimpleEntity;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-public interface SimpleEntityRepository<S> extends EntityRepository<SimpleEntity, UUID>{
+public interface SimpleEntityRepository extends EntityRepository<SimpleEntity, UUID>, IParent{
 
     @Override
     public SimpleEntity findById(UUID id) ;
@@ -19,7 +19,7 @@ public interface SimpleEntityRepository<S> extends EntityRepository<SimpleEntity
 
     @Override
     public SimpleEntity save(SimpleEntity simpleEntity) ;
-
+    @Override
     public SimpleEntity update(SimpleEntity simpleEntity);
 
 

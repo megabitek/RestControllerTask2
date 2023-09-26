@@ -14,10 +14,10 @@ public interface AnotherEntityRepository extends EntityRepository<AnotherEntity,
     public boolean deleteById(UUID id) ;
 
     @Override
-    public List<AnotherEntity> findAll() ;
+    public List<AnotherEntity> findAll();
+    @Override
+    public AnotherEntity save(AnotherEntity anotherEntity);
 
     @Override
-    public AnotherEntity save(AnotherEntity anotherEntity) ;
-
-    public AnotherEntity update(AnotherEntity anotherEntity);
+    public AnotherEntity update(AnotherEntity another);
 }

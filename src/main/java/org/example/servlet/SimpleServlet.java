@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.example.model.SimpleEntity;
-import org.example.service.SimpleService;
+import org.example.service.ISimpleService;
 import org.example.service.impl.SimpleServiceImpl;
 import org.example.servlet.dto.IncomingDtoSimple;
 import org.example.servlet.dto.OutGoingDto;
@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @WebServlet(name = "SimpleServlet", value = "/simple")
 public class SimpleServlet extends HttpServlet {
-    private SimpleService service = new SimpleServiceImpl();
+    private final ISimpleService service = new SimpleServiceImpl();
 
     private final SimpleDtomapper dtoMapper=new SimpleDtoMapperImpl();
     private Gson gson = new Gson();
@@ -96,8 +96,7 @@ public class SimpleServlet extends HttpServlet {
         OutGoingDto outDto = dtoMapper.map(saved);
 
         sendAsJson(resp, outDto);
-        //OutGoingDto map = dtomapper.map(saved);
-        // return our DTO, not necessary
+
     }
 /**
  * fetch('/simple?'+new URLSearchParams({
@@ -111,7 +110,7 @@ protected  void doPut(HttpServletRequest request,
         IncomingDtoSimple in = new IncomingDtoSimple();
         in.setId(UUID.fromString(request.getParameter("id")));
         in.setOwner(request.getParameter("owner"));
-        OutGoingDto outDto=dtoMapper.map(service.update(dtoMapper.map(in)));
+        OutGoingDto outDto=dtoMapper.map((SimpleEntity) service.update(dtoMapper.map(in)));
         sendAsJson(response, outDto);
     }
 
@@ -124,7 +123,5 @@ protected  void doPut(HttpServletRequest request,
                             HttpServletResponse response){
     UUID uuid = UUID.fromString(request.getParameter("id"));
     service.delete(uuid);
-
     }
-
 }

@@ -1,6 +1,7 @@
 package org.example.repository.mapper;
 
 import org.example.model.AnotherEntity;
+import org.example.model.SimpleEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

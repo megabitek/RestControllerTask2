@@ -10,4 +10,6 @@ class IResultSetMapperImplTest {
     void map() {
 
     }
+
+
 }
