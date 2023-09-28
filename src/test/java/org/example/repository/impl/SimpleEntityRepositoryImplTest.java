@@ -63,8 +63,9 @@ class SimpleEntityRepositoryImplTest {
 
     @Test
     void deleteById() {
-        if (repository.findById(java.util.UUID.fromString(UUID)) !=null)
-        Assert.assertTrue(repository.deleteById(java.util.UUID.fromString(UUID)));
+        if (repository.findById(java.util.UUID.fromString(UUID)) !=null) {
+                Assert.assertFalse(repository.deleteById(java.util.UUID.fromString(UUID)));
+        }
     }
 
     @Test

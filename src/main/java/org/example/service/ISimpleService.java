@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.model.AnotherEntity;
 import org.example.model.SimpleEntity;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.UUID;
         List<SimpleEntity> findAll();
 
         SimpleEntity update(SimpleEntity simpleEntity);
+
+        AnotherEntity addChildEntity(SimpleEntity simpleEntity, AnotherEntity childEntity);
 
     }
 

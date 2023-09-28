@@ -24,10 +24,14 @@ import java.util.UUID;
 
 @WebServlet(name = "SimpleServlet", value = "/simple")
 public class SimpleServlet extends HttpServlet {
-    private final ISimpleService service = new SimpleServiceImpl();
-
-    private final SimpleDtomapper dtoMapper=new SimpleDtoMapperImpl();
+    private   ISimpleService service = new SimpleServiceImpl();
+    final SimpleDtomapper dtoMapper=new SimpleDtoMapperImpl();
     private Gson gson = new Gson();
+    public void setService(ISimpleService service) {
+        this.service = service;
+    }
+
+
 
     private void sendAsJson(
             HttpServletResponse response,

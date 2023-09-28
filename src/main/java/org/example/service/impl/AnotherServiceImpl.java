@@ -28,8 +28,9 @@ public class AnotherServiceImpl<K, S> implements IService<UUID, AnotherEntity>  
 
     @Override
     public AnotherEntity delete(UUID uuid) {
+        AnotherEntity entity = repository.findById(uuid);
         if (repository.deleteById(uuid))
-            return repository.findById(uuid);
+            return entity;
         return null;
     }
 

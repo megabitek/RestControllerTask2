@@ -45,22 +45,23 @@ return entity;
     }
 
     @Override
-    public boolean deleteById(UUID uuid) {
-        try {
+    public boolean deleteById(UUID uuid){
+        List<AnotherEntity> anotherEntities = getChildren(uuid);
+if ( anotherEntities.size()==0 ) {
+         try {
             PreparedStatement preparedStatement = connection.prepareStatement("delete from simple_entity where uuid = ?");
             preparedStatement.setObject(1, uuid);
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {
-            return false;
+             return false;
+         }
+        } else return false;
 
-
-        }
     }
 
     @Override
     public List<SimpleEntity> findAll() {
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from simple_entity");
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -95,6 +96,8 @@ return entity;
             return null;
         }
     }
+
+
 
     @Override
     public List<AnotherEntity> getChildren(UUID simple_uuid) {

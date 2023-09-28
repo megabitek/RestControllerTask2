@@ -5,6 +5,7 @@ import org.example.repository.EntityRepository;
 import org.example.repository.SimpleEntityRepository;
 import org.example.repository.impl.SimpleEntityRepositoryImpl;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,8 +16,8 @@ import static org.mockito.Mockito.when;
 
 class SimpleServiceImplTest {
 
-    public  final String NAME = "vova";
-    public  final UUID uuid = UUID.fromString("76bde8dd-f961-4653-85f5-bcdc4ac171f0");
+    public   final String NAME = "vova";
+    public   final UUID uuid = UUID.fromString("76bde8dd-f961-4653-85f5-bcdc4ac171f0");
 
 
 
@@ -29,12 +30,21 @@ class SimpleServiceImplTest {
        service.setRepository(repository);
     }
 
+    @Before
+     void createEntityInRepo(){
+        SimpleEntity entity = new SimpleEntity();
+        entity.setName(NAME);
+        entity.setUuid(UUID.randomUUID());
+        when(repository.findById(uuid)).thenReturn(entity);
+        when(repository.deleteById(uuid)).thenReturn(true);
+        when(repository.save(entity)).thenReturn(entity);
+    }
+
     @Test
     void save() {
         SimpleEntity entity = new SimpleEntity();
         entity.setName(NAME);
         entity.setUuid(UUID.randomUUID());
-        when(repository.save(entity)).thenReturn(entity);
         SimpleEntity saved = service.save(entity);
         Assert.assertNotNull(saved);
         Assert.assertEquals(saved.getName(), entity.getName());
@@ -56,9 +66,11 @@ class SimpleServiceImplTest {
 
     @Test
     void delete (){
-        when(repository.deleteById(uuid)).thenReturn(true);
         SimpleEntity entity = new SimpleEntity();
-        entity.setUuid(uuid);
+        entity.setName(NAME);
+        entity.setUuid(UUID.randomUUID());
+        when(repository.findById(uuid)).thenReturn(entity);
+        when(repository.deleteById(uuid)).thenReturn(true);
         SimpleEntity deleted = service.delete(uuid);
         Assert.assertEquals(entity.getUuid(), deleted.getUuid());
         Assert.assertEquals(entity.getName(), deleted.getName());

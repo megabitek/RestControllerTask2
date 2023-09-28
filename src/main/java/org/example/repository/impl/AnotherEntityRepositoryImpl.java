@@ -24,12 +24,31 @@ public class AnotherEntityRepositoryImpl implements EntityRepository<AnotherEnti
 
     @Override
     public AnotherEntity findById(UUID id) {
-        return null;
+        AnotherEntity entity = new AnotherEntity();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from simple_entity where uuid = ?");
+            preparedStatement.setObject(1, id);
+            ResultSet resultSet_sim = preparedStatement.executeQuery();
+            entity = (AnotherEntity) anotherResultSetMapper.map(resultSet_sim);
+            return entity;
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
     @Override
     public boolean deleteById(UUID id) {
-        return false;
+
+            try {
+
+                PreparedStatement preparedStatement = null;
+                preparedStatement = connection.prepareStatement("delete from anothers where uuid = ?");
+                preparedStatement.setObject(1, id);
+                preparedStatement.execute();
+                return true;
+            } catch (SQLException e) {
+                return false;
+            }
     }
 
     @Override
@@ -48,19 +67,7 @@ public class AnotherEntityRepositoryImpl implements EntityRepository<AnotherEnti
     }
 
 
-  /*  @Override
-    public AnotherEntity findById(UUID id) {
-        AnotherEntity entity = new AnotherEntity();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from simple_entity where uuid = ?");
-            preparedStatement.setObject(1, id);
-            ResultSet resultSet_sim = preparedStatement.executeQuery();
-            entity = (AnotherEntity) anotherResultSetMapper.map(resultSet_sim);
-            return entity;
-        } catch (SQLException e) {
-            return null;
-        }
-    }
+  /*
 
     @Override
     public boolean deleteById(UUID id) {

@@ -2,6 +2,7 @@ package org.example.service.impl;
 
 import org.example.model.AnotherEntity;
 import org.example.model.SimpleEntity;
+import org.example.repository.AnotherEntityRepository;
 import org.example.repository.EntityRepository;
 import org.example.repository.SimpleEntityRepository;
 import org.example.repository.impl.AnotherEntityRepositoryImpl;
@@ -15,8 +16,12 @@ import java.util.UUID;
 public class SimpleServiceImpl implements ISimpleService {
 
     SimpleEntityRepository repository = new SimpleEntityRepositoryImpl();
-   // AnotherEntityRepository <AnotherEntity> another_repo = new AnotherEntityRepositoryImpl();
    AnotherEntityRepositoryImpl another_repo = new AnotherEntityRepositoryImpl();
+
+
+    public void setRepository(SimpleEntityRepository repository) {
+        this.repository = repository;
+    }
     @Override
     public SimpleEntity save(SimpleEntity simpleEntity) {
         repository.save(simpleEntity);
@@ -56,7 +61,13 @@ public class SimpleServiceImpl implements ISimpleService {
         return simpleEntity;
     }
 
-    public void setRepository(SimpleEntityRepository repository) {
-        this.repository = repository;
+    @Override
+    public AnotherEntity addChildEntity(SimpleEntity simpleEntity, AnotherEntity childEntity) {
+        childEntity.setSimple( simpleEntity.getUuid());
+        another_repo.save(childEntity);
+        simpleEntity.getOthers().add(childEntity);
+
+        return null;
     }
+
 }
