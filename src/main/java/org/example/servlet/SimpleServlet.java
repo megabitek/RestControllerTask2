@@ -64,9 +64,11 @@ public class SimpleServlet extends HttpServlet {
             UUID id = UUID.fromString(req.getParameter("id"));
             OutGoingDto map  =  dtoMapper.map(service.findById(id));
             sendAsJson(resp, map);
+            resp.setStatus(200);
         } else{
             List<OutGoingDto> listDto = dtoMapper.mapListOut(service.findAll());
               sendAsJson(resp, listDto);
+              resp.setStatus(200);
             }
 
  }
@@ -89,16 +91,14 @@ public class SimpleServlet extends HttpServlet {
 
         String line;
         while ((line = reader.readLine()) != null) {
-            buffer.append(line);}
+            buffer.append(line);
+        }
         String payload = buffer.toString();
         IncomingDtoSimple dto = gson.fromJson(payload, IncomingDtoSimple.class);
-
         SimpleEntity entity = dtoMapper.map(dto);
-
         SimpleEntity saved = service.save(entity);
-
         OutGoingDto outDto = dtoMapper.map(saved);
-
+        resp.setStatus(200);
         sendAsJson(resp, outDto);
 
     }
@@ -115,6 +115,7 @@ protected  void doPut(HttpServletRequest request,
         in.setId(UUID.fromString(request.getParameter("id")));
         in.setOwner(request.getParameter("owner"));
         OutGoingDto outDto=dtoMapper.map((SimpleEntity) service.update(dtoMapper.map(in)));
+        response.setStatus(200);
         sendAsJson(response, outDto);
     }
 
