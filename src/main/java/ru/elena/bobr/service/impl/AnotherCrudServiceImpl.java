@@ -17,6 +17,10 @@ public class AnotherCrudServiceImpl implements IParentCrudService<Doctor, Anothe
     AnotherEntityRepository repository = new AnotherEntityRepositoryImpl();
     DoctorRepository doctorRepository = new DoctorRepository();
 
+    public void setRepository(AnotherEntityRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public AnotherEntity save(AnotherEntity entity) {
         return repository.save(entity);

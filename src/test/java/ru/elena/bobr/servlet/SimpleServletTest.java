@@ -51,8 +51,6 @@ private SimpleServiceImpl service =   Mockito.mock(SimpleServiceImpl.class);
         verify(service, times(1)).findById(any(UUID.class));
         verify(response, times(1)).setContentType("application/json");
         verify(writer, times(1)).print(anyString());
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -72,8 +70,6 @@ private SimpleServiceImpl service =   Mockito.mock(SimpleServiceImpl.class);
             verify(service, times(1)).findAll();
             verify(response, times(1)).setContentType("application/json");
             verify(writer, times(1)).print(anyString());
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -94,8 +90,6 @@ private SimpleServiceImpl service =   Mockito.mock(SimpleServiceImpl.class);
         verify(service.save(any()));
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ServletException e) {
             throw new RuntimeException(e);
         }
     }

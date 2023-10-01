@@ -32,7 +32,7 @@ public class AnotherEntityRepositoryImpl implements AnotherEntityRepository {
         AnotherEntity entity = new AnotherEntity();
         try {
 
-           try( PreparedStatement preparedStatement = connection.prepareStatement("select * from simple_entity where uuid = ?")) {
+           try( PreparedStatement preparedStatement = connection.prepareStatement("select * from anothers where uuid = ?")) {
             preparedStatement.setObject(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             entity =  anotherResultSetMapper.map(resultSet);
@@ -90,8 +90,7 @@ try
     @Override
     public AnotherEntity update(AnotherEntity another) {
         try {
-            try
-                    (PreparedStatement preparedStatement = connection.prepareStatement("update anothers  set name = ?, simple_uuid=? where uuid= ?")) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement("update anothers  set name = ?, simple_uuid=? where uuid= ?")) {
                 preparedStatement.setString(1, another.getName());
                 preparedStatement.setObject(2, another.getSimple());
                 preparedStatement.execute();
@@ -108,7 +107,7 @@ try
         List<Doctor> doctors = new ArrayList<>();
         try {
 
-            try (PreparedStatement preparedStatement = connection.prepareStatement("select name, uuid from doctor " +
+            try (PreparedStatement preparedStatement = connection.prepareStatement("select name, last_name, uuid from doctor " +
                     "where uuid in ( select doctor_uuid  from doctors_pets where pets_uuid =?) ")) {
                 preparedStatement.setObject(1, uuid);
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {

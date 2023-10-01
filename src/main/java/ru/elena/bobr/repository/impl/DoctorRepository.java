@@ -103,7 +103,7 @@ public class DoctorRepository implements EntityRepository<Doctor, UUID>, IParent
     public List<AnotherEntity> getChildren(UUID simple_uuid) {
         List <AnotherEntity> anotherEntities = new ArrayList<>();
         try {
-            try(PreparedStatement preparedStatement = connection.prepareStatement("select name, uuid from doctors " +
+            try(PreparedStatement preparedStatement = connection.prepareStatement("select name, uuid, simple_uuid from anothers " +
                     "where uuid in ( select pets_uuid  from doctors_pets where doctor_uuid =?) ")){
             preparedStatement.setObject(1, simple_uuid);
             ResultSet resultSet = preparedStatement.executeQuery();

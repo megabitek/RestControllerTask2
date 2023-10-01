@@ -17,20 +17,20 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
-public class AnotherEntityRepositoryTest {
-    private static final String UUIDCorrect = "7f9e408a-1b30-47f6-aace-482dc0854115";
+public class DoctorRepositoryTest {
+    private static final String UUIDCorrect = "74ac3d23-6b19-4db4-ad08-ca9469a98e9c";
     private static final String UUIDIncorrect = "7f9e408a-1b30-47f6-aace-482dc0854987";
-    private static final String childfree = "90911230-5678-9101-5555-2d8588ac488e";
-    private static final String simpleUUIDCorrect = "76bde8dd-f961-4653-85f5-bcdc4ac171f0";
-    private static final String simpleUUIDIncorrect = "76bde8dd-9876-5432-85f5-bcdc4ac171f0";
+    private static final String childfree = "9336043d-9b26-4587-bdd7-25dc507b60e4";
+   // private static final String simpleUUIDCorrect = "76bde8dd-f961-4653-85f5-bcdc4ac171f0";
+   // private static final String simpleUUIDIncorrect = "76bde8dd-9876-5432-85f5-bcdc4ac171f0";
 
-    private static final String nameSaved = "snejok";
-    private static final String nameUpdated = "murka";
-
-
+    private static final String nameSaved = "iyri";
+    private static final String nameUpdated = "denis";
 
 
-    AnotherEntityRepositoryImpl repository = new AnotherEntityRepositoryImpl();
+
+
+    DoctorRepository repository = new DoctorRepository();
 
 
     @Container
@@ -63,20 +63,20 @@ public class AnotherEntityRepositoryTest {
 
     @Test
     void findById() {
-        AnotherEntity found = repository.findById(UUID.fromString(UUIDCorrect));
+        Doctor found = repository.findById(UUID.fromString(UUIDCorrect));
         Assert.assertNotNull(found);
     }
 
     @Test
     void findAll() {
-        List<AnotherEntity> found = repository.findAll();
+        List<Doctor> found = repository.findAll();
         Assert.assertNotNull(found);
-        Assert.assertEquals(found.size(), 4);
+        Assert.assertEquals(found.size(), 3);
     }
 
     @Test
     void findByIdIncorrect() {
-        AnotherEntity found = repository.findById(UUID.fromString(UUIDIncorrect));
+        Doctor found = repository.findById(UUID.fromString(UUIDIncorrect));
         Assert.assertNull(found);
     }
 
@@ -90,7 +90,7 @@ public class AnotherEntityRepositoryTest {
     @Test
     void deleteById() {
         if (repository.findById(UUID.fromString(UUIDCorrect)) != null) {
-            Assert.assertFalse(repository.deleteById(java.util.UUID.fromString(UUIDCorrect)));
+            Assert.assertFalse(repository.deleteById(UUID.fromString(UUIDCorrect)));
         }
     }
 
@@ -103,56 +103,39 @@ public class AnotherEntityRepositoryTest {
 
     @Test
     void save() {
-        AnotherEntity entity = new AnotherEntity();
+        Doctor entity = new Doctor();
         entity.setName(nameSaved);
-        entity.setSimple(UUID.fromString(simpleUUIDCorrect));
-        AnotherEntity entitySaved = repository.save(entity);
+        Doctor entitySaved = repository.save(entity);
         Assert.assertEquals(entity.getUuid(), entitySaved.getUuid());
         Assert.assertEquals(entity.getName(), entitySaved.getName());
-        Assert.assertEquals(entity.getSimple(), entitySaved.getSimple());
+        Assert.assertEquals(entity.getLastName(), entitySaved.getLastName());
     }
 
-    @Test
-    void saveSimpleIncorrect() {
-        AnotherEntity entity = new AnotherEntity();
-        entity.setName(nameSaved);
-        entity.setSimple(UUID.fromString(simpleUUIDIncorrect));
-        AnotherEntity entitySaved = repository.save(entity);
-        Assert.assertNull(entitySaved);
-    }
+
     @Test
     void update() {
-        AnotherEntity entity = repository.findById(UUID.fromString(UUIDCorrect));
+        Doctor entity = repository.findById(UUID.fromString(UUIDCorrect));
         entity.setName(nameUpdated);
-        entity.setSimple(UUID.fromString(simpleUUIDCorrect));
-        AnotherEntity entitySaved = repository.save(entity);
+        Doctor entitySaved = repository.save(entity);
         Assert.assertEquals(entity.getUuid(), entitySaved.getUuid());
         Assert.assertEquals(entity.getName(), nameUpdated);
-        Assert.assertEquals(entity.getSimple(), entitySaved.getSimple());
-    }
-    @Test
-    void updateIncorrectSimpleUUID() {
-        AnotherEntity entity = repository.findById(UUID.fromString(UUIDCorrect));
-        entity.setName(nameUpdated);
-        entity.setSimple(UUID.fromString(simpleUUIDIncorrect));
-        AnotherEntity entitySaved = repository.save(entity);
-        Assert.assertNull(entitySaved);
 
     }
-@Test
+
+    @Test
     void getChildren(){
-    List<Doctor> doctors= repository.getChildren(UUID.fromString(UUIDCorrect));
-    Assert.assertNotNull(doctors);
-    Assert.assertEquals(1, doctors.size());
-    Assert.assertEquals("ivan", doctors.get(0).getName());
-    Assert.assertEquals("ivanov", doctors.get(0).getLastName());
+        List<AnotherEntity> pets= repository.getChildren(UUID.fromString(UUIDCorrect));
+        Assert.assertNotNull(pets);
+        Assert.assertEquals(2, pets.size());
+        Assert.assertEquals("tobic", pets.get(1).getName());
+        Assert.assertEquals("bob", pets.get(0).getName());
     }
 
     @Test
     void deleteChildren(){
         Assert.assertTrue(repository.deleteAllChildren(UUID.fromString(UUIDCorrect)));
     }
-   }
+}
 
 
 

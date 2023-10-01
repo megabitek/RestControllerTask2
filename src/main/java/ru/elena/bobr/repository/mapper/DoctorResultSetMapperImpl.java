@@ -13,7 +13,6 @@ public class DoctorResultSetMapperImpl  implements  IResultSetMapper<Doctor>{
             String name = resultSet.getString("name");
             String last_name = resultSet.getString("last_name");
             UUID uuid = (UUID) resultSet.getObject("uuid");
-            UUID simpleUuid = (UUID) resultSet.getObject("simple_uuid");
             Doctor doctor = new Doctor( uuid, name, last_name );
             return doctor;
         } catch (SQLException e) {

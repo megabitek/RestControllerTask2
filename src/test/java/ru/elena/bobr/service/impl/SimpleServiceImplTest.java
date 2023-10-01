@@ -1,12 +1,12 @@
 package ru.elena.bobr.service.impl;
 
+import org.junit.jupiter.api.BeforeEach;
 import ru.elena.bobr.model.SimpleEntity;
 import ru.elena.bobr.repository.SimpleEntityRepository;
 import ru.elena.bobr.repository.impl.SimpleEntityRepositoryImpl;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.UUID;
