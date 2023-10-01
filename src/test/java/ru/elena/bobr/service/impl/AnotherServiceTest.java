@@ -6,21 +6,23 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
 import ru.elena.bobr.model.AnotherEntity;
-import ru.elena.bobr.model.SimpleEntity;
+import ru.elena.bobr.model.Doctor;
 import ru.elena.bobr.repository.AnotherEntityRepository;
-import ru.elena.bobr.repository.impl.AnotherEntityRepositoryImpl;
+import ru.elena.bobr.repository.impl.DoctorRepository;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import static org.mockito.Mockito.when;
 
 public class AnotherServiceTest {
 
-   AnotherCrudServiceImpl service = new AnotherCrudServiceImpl();
-   AnotherEntityRepository repository = Mockito.mock(AnotherEntityRepositoryImpl.class);
 
+   AnotherEntityRepository repository = Mockito.mock(AnotherEntityRepository.class);
+
+    DoctorRepository doctorRepository = Mockito.mock(DoctorRepository.class);
+    AnotherCrudServiceImpl service = new AnotherCrudServiceImpl();
     public   final UUID uuidExist= UUID.fromString("7f9e408a-1b30-47f6-aace-482dc0854115");
-
 
     public static final UUID SimpleUUIDCorrect = UUID.fromString("76bde8dd-f961-4653-85f5-bcdc4ac171f0");
     public   final String NAME = "murka";
@@ -55,7 +57,7 @@ public class AnotherServiceTest {
         }
 
     @Test
-    void findById() {
+    public void findById() {
         AnotherEntity entity = new AnotherEntity();
         entity.setName(NAME);
         entity.setUuid(uuidExist);
@@ -66,6 +68,18 @@ public class AnotherServiceTest {
         Assert.assertEquals(found.getUuid(), entity.getUuid());
 
     }
+    @Test
+    public  void delete (){
+        AnotherEntity entity = new AnotherEntity();
+        entity.setUuid(uuidExist);
+        when(repository.findById(uuidExist)).thenReturn(entity);
+        when(repository.getChildren(uuidExist)).thenReturn(new ArrayList<Doctor>());
+        when(repository.deleteById(uuidExist)).thenReturn(true);
+        AnotherEntity deleted = service.delete(uuidExist);
+        Assert.assertEquals(entity.getUuid(), deleted.getUuid());
+        Assert.assertEquals(entity.getName(), deleted.getName());
+    }
+
 
 }
 

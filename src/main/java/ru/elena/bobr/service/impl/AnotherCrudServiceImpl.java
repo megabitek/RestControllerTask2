@@ -38,7 +38,8 @@ public class AnotherCrudServiceImpl implements IParentCrudService<Doctor, Anothe
     @Override
     public AnotherEntity delete(UUID uuid) {
         AnotherEntity entity = repository.findById(uuid);
-        if ((!entity.getDoctors().isEmpty()&& repository.deleteById(uuid)))
+        List<Doctor>  doctors = repository.getChildren(uuid);
+        if (doctors.isEmpty() && repository.deleteById(uuid))
             return entity;
         else
             return null;

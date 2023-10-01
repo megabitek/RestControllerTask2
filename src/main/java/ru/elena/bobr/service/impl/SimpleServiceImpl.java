@@ -18,9 +18,12 @@ public class SimpleServiceImpl implements IParentCrudService<AnotherEntity, Simp
    AnotherEntityRepositoryImpl another_repo = new AnotherEntityRepositoryImpl();
 
 
-    public void setRepository(SimpleEntityRepository repository) {
+    public void setRepository(SimpleEntityRepository repository/*, AnotherEntityRepositoryImpl another_repo*/) {
         this.repository = repository;
+    /*    this.another_repo = another_repo;*/
     }
+
+
     @Override
     public SimpleEntity save(SimpleEntity simpleEntity) {
         repository.save(simpleEntity);

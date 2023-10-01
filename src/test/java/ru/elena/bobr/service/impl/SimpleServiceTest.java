@@ -5,7 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
-
+import ru.elena.bobr.model.AnotherEntity;
+import ru.elena.bobr.model.Doctor;
 import ru.elena.bobr.model.SimpleEntity;
 import ru.elena.bobr.repository.AnotherEntityRepository;
 import ru.elena.bobr.repository.SimpleEntityRepository;
@@ -17,20 +18,20 @@ import java.util.UUID;
 
 import static org.mockito.Mockito.when;
 
-class SimpleServiceImplTest {
+class SimpleServiceTest {
 
     public   final String NAME = "vova";
     public   final UUID uuid = UUID.fromString("76bde8dd-f961-4653-85f5-bcdc4ac171f0");
     SimpleServiceImpl service = new SimpleServiceImpl();
     SimpleEntityRepository repository = Mockito.mock(SimpleEntityRepositoryImpl.class);
- //  AnotherEntityRepositoryImpl anRepository = Mockito.mock(AnotherEntityRepositoryImpl.class);
+    AnotherEntityRepositoryImpl anRepository = Mockito.mock(AnotherEntityRepositoryImpl.class);
     @BeforeEach
     void setUp() {
-       service.setRepository(repository/*, anRepository*/);
+        service.setRepository(repository);
     }
 
     @Before
-     void createEntityInRepo(){
+    void createEntityInRepo(){
         SimpleEntity entity = new SimpleEntity();
         entity.setName(NAME);
         entity.setUuid(UUID.randomUUID());
@@ -74,4 +75,4 @@ class SimpleServiceImplTest {
         Assert.assertEquals(entity.getUuid(), deleted.getUuid());
         Assert.assertEquals(entity.getName(), deleted.getName());
     }
-   }
+}
