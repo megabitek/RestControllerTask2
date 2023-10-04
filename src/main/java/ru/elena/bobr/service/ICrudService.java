@@ -1,6 +1,7 @@
 package ru.elena.bobr.service;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ICrudService<K, T> {
 
@@ -9,7 +10,7 @@ public interface ICrudService<K, T> {
 
     T findById(K uuid);
 
-    T delete (K uuid);
+    Optional<T> delete (K uuid);
 
     List<T> findAll();
 

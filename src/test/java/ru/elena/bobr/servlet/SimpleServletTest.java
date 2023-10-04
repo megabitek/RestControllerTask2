@@ -106,7 +106,11 @@ private SimpleServiceImpl service =   Mockito.mock(SimpleServiceImpl.class);
         entity.setName(NAME);
         entity.setUuid(UUID.randomUUID());
         when(service.findById(uuid)).thenReturn(entity);
-        servlet.doDelete(request, response);
+        try {
+            servlet.doDelete(request, response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

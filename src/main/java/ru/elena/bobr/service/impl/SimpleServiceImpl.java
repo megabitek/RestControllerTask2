@@ -10,6 +10,7 @@ import ru.elena.bobr.service.IParentCrudService;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class SimpleServiceImpl implements IParentCrudService<AnotherEntity, SimpleEntity>, ICrudService< UUID, SimpleEntity> {
@@ -39,14 +40,16 @@ public class SimpleServiceImpl implements IParentCrudService<AnotherEntity, Simp
     }
 
     @Override
-    public SimpleEntity delete(UUID uuid) {
+    public Optional<SimpleEntity> delete(UUID uuid) {
+        Optional<SimpleEntity>  optionalDeleted= Optional.empty();
         SimpleEntity entity = repository.findById(uuid);
         if (entity.getOthers().size()>0)
             entity.getOthers().stream().forEach(other->another_repo.deleteById(other.getUuid()));
         if (repository.deleteById(uuid)){
-            return entity;
+
+            return optionalDeleted.ofNullable(entity);
         }
-        else return null;
+        else return optionalDeleted;
     }
 
 

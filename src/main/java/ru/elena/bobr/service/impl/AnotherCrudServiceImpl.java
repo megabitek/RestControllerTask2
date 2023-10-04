@@ -10,6 +10,7 @@ import ru.elena.bobr.service.ICrudService;
 import ru.elena.bobr.service.IParentCrudService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class AnotherCrudServiceImpl implements IParentCrudService<Doctor, AnotherEntity >, ICrudService< UUID, AnotherEntity>  {
@@ -28,21 +29,24 @@ public class AnotherCrudServiceImpl implements IParentCrudService<Doctor, Anothe
 
     @Override
     public AnotherEntity findById(UUID uuid) {
-
-        AnotherEntity entity =  repository.findById(uuid);
+        AnotherEntity entity= repository.findById(uuid);
+        Optional<AnotherEntity> Opt =  Optional.ofNullable(entity);
+        if (Opt.isPresent()){
         List<Doctor>  doctors = repository.getChildren(uuid);
-        entity.setDoctors(doctors);
+        entity.setDoctors(doctors);}
         return entity;
     }
 
     @Override
-    public AnotherEntity delete(UUID uuid) {
-        AnotherEntity entity = repository.findById(uuid);
+    public Optional<AnotherEntity> delete(UUID uuid) {
+
+        Optional<AnotherEntity>  entity = Optional.empty();
+         AnotherEntity entityDeleted = repository.findById(uuid);
         List<Doctor>  doctors = repository.getChildren(uuid);
         if (doctors.isEmpty() && repository.deleteById(uuid))
-            return entity;
+            return entity.ofNullable(entityDeleted);
         else
-            return null;
+            return entity;
     }
 
 

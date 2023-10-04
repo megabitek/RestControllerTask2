@@ -9,6 +9,7 @@ import ru.elena.bobr.service.ICrudService;
 import ru.elena.bobr.service.IParentCrudService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class DoctorService  implements IParentCrudService<AnotherEntity, Doctor>, ICrudService<UUID, Doctor> {
@@ -32,14 +33,14 @@ public class DoctorService  implements IParentCrudService<AnotherEntity, Doctor>
     }
 
     @Override
-    public Doctor delete(UUID uuid) {
+    public Optional<Doctor> delete(UUID uuid) {
         Doctor entity = doctor_repo.findById(uuid);
         if (entity.getPets().size()>0)
             entity.getPets().stream().forEach(other->an_repo.deleteById(other.getUuid()));
         if (doctor_repo.deleteById(uuid)){
-            return entity;
+            return Optional.ofNullable(entity);
         }
-        else return null;
+        else return Optional.empty();
     }
 
     @Override
