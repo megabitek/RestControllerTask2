@@ -1,5 +1,6 @@
 package ru.elena.bobr.servlet;
 
+import org.junit.Assert;
 import ru.elena.bobr.model.SimpleEntity;
 import ru.elena.bobr.service.impl.SimpleServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +53,7 @@ private SimpleServiceImpl service =   Mockito.mock(SimpleServiceImpl.class);
         verify(response, times(1)).setContentType("application/json");
         verify(writer, times(1)).print(anyString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Assert.assertTrue(false);
         }
     }
 
@@ -66,12 +67,11 @@ private SimpleServiceImpl service =   Mockito.mock(SimpleServiceImpl.class);
             HashMap parameterMap = new HashMap<>();
             when(request.getParameterMap()).thenReturn(parameterMap);
             servlet.doGet(request, response);
-
             verify(service, times(1)).findAll();
             verify(response, times(1)).setContentType("application/json");
             verify(writer, times(1)).print(anyString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Assert.assertTrue(false);
         }
     }
 
@@ -87,10 +87,10 @@ private SimpleServiceImpl service =   Mockito.mock(SimpleServiceImpl.class);
         when(service.save(any())).thenReturn(mock(SimpleEntity.class));
         when(response.getWriter()).thenReturn(writer);
         servlet.doPost(request, response);
-        verify(service.save(any()));
+        verify(service, times(1)).save(any());
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Assert.assertTrue(false);
         }
     }
 
@@ -109,7 +109,7 @@ private SimpleServiceImpl service =   Mockito.mock(SimpleServiceImpl.class);
         try {
             servlet.doDelete(request, response);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Assert.assertTrue(false);
         }
     }
 

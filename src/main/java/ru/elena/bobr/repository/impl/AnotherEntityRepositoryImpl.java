@@ -24,7 +24,7 @@ public class AnotherEntityRepositoryImpl implements AnotherEntityRepository {
     private IResultSetMapper<Doctor> doctorResultSetMapper = new DoctorResultSetMapperImpl();
 
 
-    public Connection connection = new ConnectionFactory("/utils/database.properties").getConnection();
+    public static  Connection connection = new ConnectionFactory("/utils/database.properties").getConnection();
 
 
     @Override
@@ -88,16 +88,17 @@ try
     }
 
     @Override
-    public AnotherEntity update(AnotherEntity another) {
+    public AnotherEntity update(AnotherEntity another) throws SQLException {
         try {
             try (PreparedStatement preparedStatement = connection.prepareStatement("update anothers  set name = ?, simple_uuid=? where uuid= ?")) {
                 preparedStatement.setString(1, another.getName());
                 preparedStatement.setObject(2, another.getSimple());
+                preparedStatement.setObject(3, another.getUuid());
                 preparedStatement.execute();
                 return another;
             }
         } catch (SQLException e) {
-            return null;
+            throw  new SQLException("Wrong entity parameters for update");
         }
     }
 

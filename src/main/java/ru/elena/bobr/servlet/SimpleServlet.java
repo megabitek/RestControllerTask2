@@ -86,7 +86,7 @@ processError(request,response);
      * {
      * method: 'POST',
      * headers: { 'Content-Type': 'application/json' },
-     * body: JSON.stringify({  owner:'dasha' })
+     * body: JSON.stringify({  ownername:'dasha' })
      * }
      * ).then(result=>result.json())
      */
@@ -115,7 +115,7 @@ processError(request,response);
 
     /**
      * fetch('/simple?'+new URLSearchParams({
-     * id: '2382018b-7959-4bc0-b821-2188f6307ffb', owner: 'Kolya'}),
+     * id: '2382018b-7959-4bc0-b821-2188f6307ffb', ownername: 'Kolya'}),
      * { method: 'PUT' }).then(result => console.log(result))
      */
     @Override
@@ -123,7 +123,7 @@ processError(request,response);
                          HttpServletResponse response) throws IOException {
         IncomingDtoSimple in = new IncomingDtoSimple();
         in.setId(UUID.fromString(request.getParameter("id")));
-        in.setOwner(request.getParameter("owner"));
+        in.setOwnerName(request.getParameter("ownername"));
         OutGoingDtoSimple outDto = dtoMapper.mapOut(service.update(dtoMapper.mapIn(in)));
         response.setStatus(200);
         sender.send(response, outDto);
@@ -151,7 +151,7 @@ processError(request,response);
     private void processError(HttpServletRequest request,
                               HttpServletResponse response) throws IOException {
         // Analyze the servlet exception
-        Throwable throwable = (Throwable) request
+      /*  Throwable throwable = (Throwable) request
                 .getAttribute("javax.servlet.error.exception");
         Integer statusCode = (Integer) request
                 .getAttribute("javax.servlet.error.status_code");
@@ -188,5 +188,5 @@ processError(request,response);
         out.write("<br><br>");
         out.write("<a href=\"index.html\">Home Page</a>");
         out.write("</body></html>");
-}}
+}*/}}
 

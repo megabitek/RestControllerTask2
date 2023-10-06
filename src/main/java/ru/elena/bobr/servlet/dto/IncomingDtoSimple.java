@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class IncomingDtoSimple {
 UUID id;
-String owner;
+String ownername;
 
     public UUID getId() {
         return id;
@@ -14,11 +14,11 @@ String owner;
         this.id = id;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getOwnername() {
+        return ownername;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setOwnerName(String owner) {
+        this.ownername = ownername;
     }
 }

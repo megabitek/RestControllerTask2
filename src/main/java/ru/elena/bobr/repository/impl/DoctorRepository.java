@@ -61,7 +61,7 @@ public class DoctorRepository implements EntityRepository<Doctor, UUID>, IParent
     @Override
     public List<Doctor> findAll() {
         try {
-            try(PreparedStatement preparedStatement = connection.prepareStatement("select * from simple_entity")){
+            try(PreparedStatement preparedStatement = connection.prepareStatement("select * from doctor")){
             ResultSet resultSet = preparedStatement.executeQuery();
             return doctorResultSetMapper.mapList(resultSet);}
         } catch (SQLException e) {

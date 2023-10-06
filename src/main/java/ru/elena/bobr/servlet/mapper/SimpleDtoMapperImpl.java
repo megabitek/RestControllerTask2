@@ -12,7 +12,7 @@ public class SimpleDtoMapperImpl implements IDtoMapper<SimpleEntity, IncomingDto
 
     @Override
     public SimpleEntity mapIn(IncomingDtoSimple incomingDtoSimple) {
-return new SimpleEntity (incomingDtoSimple.getId(), incomingDtoSimple.getOwner());
+return new SimpleEntity (incomingDtoSimple.getId(), incomingDtoSimple.getOwnername());
     }
 
 
@@ -25,7 +25,7 @@ return new SimpleEntity (incomingDtoSimple.getId(), incomingDtoSimple.getOwner()
     public List<SimpleEntity> mapListIn(List<IncomingDtoSimple> incomingDtoSimple) {
         List<SimpleEntity> entityList = new ArrayList<SimpleEntity>(incomingDtoSimple.size());
         for (int i = 0; i< incomingDtoSimple.size(); i++) {
-            entityList.add(new SimpleEntity(incomingDtoSimple.get(i).getId(), incomingDtoSimple.get(i).getOwner()));
+            entityList.add(new SimpleEntity(incomingDtoSimple.get(i).getId(), incomingDtoSimple.get(i).getOwnername()));
         }
      return  entityList;
     }

@@ -9,6 +9,7 @@ import ru.elena.bobr.repository.impl.DoctorRepository;
 import ru.elena.bobr.service.ICrudService;
 import ru.elena.bobr.service.IParentCrudService;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,35 +31,43 @@ public class AnotherCrudServiceImpl implements IParentCrudService<Doctor, Anothe
     @Override
     public AnotherEntity findById(UUID uuid) {
         AnotherEntity entity= repository.findById(uuid);
-        Optional<AnotherEntity> Opt =  Optional.ofNullable(entity);
-        if (Opt.isPresent()){
+        Optional<AnotherEntity> optFound =  Optional.ofNullable(entity);
+        if (optFound.isPresent()){
         List<Doctor>  doctors = repository.getChildren(uuid);
-        entity.setDoctors(doctors);}
+        entity.setDoctors(doctors);
         return entity;
+        }
+        else throw new RuntimeException("Entity not found by id! ");
     }
 
     @Override
     public Optional<AnotherEntity> delete(UUID uuid) {
 
-        Optional<AnotherEntity>  entity = Optional.empty();
-         AnotherEntity entityDeleted = repository.findById(uuid);
+        Optional< AnotherEntity> entityDeleted = Optional.ofNullable(repository.findById(uuid));
+         if (entityDeleted.isPresent()){
         List<Doctor>  doctors = repository.getChildren(uuid);
-        if (doctors.isEmpty() && repository.deleteById(uuid))
-            return entity.ofNullable(entityDeleted);
-        else
-            return entity;
+        if (!doctors.isEmpty())
+            repository.deleteAllChildren(uuid);
+        repository.deleteById(uuid);
+         }
+        return entityDeleted;
     }
 
 
     @Override
     public List<AnotherEntity> findAll() {
-        return repository.findAll();
+        List<AnotherEntity> anotherEntities =  repository.findAll();
+        anotherEntities.stream().forEach(entity->entity.setDoctors(repository.getChildren(entity.getUuid())));
+        return anotherEntities;
     }
 
 
     @Override
     public AnotherEntity update(AnotherEntity entity) {
-        return repository.update(entity);
+        try {
+            return repository.update(entity);
+        } catch (SQLException e) {
+        throw new RuntimeException("Update is not complete successfully");}
     }
 
     @Override
@@ -69,9 +78,8 @@ public class AnotherCrudServiceImpl implements IParentCrudService<Doctor, Anothe
     }
 
     @Override
-    public AnotherEntity deleteChildEntity(Doctor children, AnotherEntity parent) {
-         if (repository.deleteAllChildren(parent.getUuid())) return parent ;
-         else return null;
+    public void deleteChildEntity(Doctor children, AnotherEntity parent) {
+          repository.deleteAllChildren(parent.getUuid());
     }
 }
 

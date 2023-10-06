@@ -2,6 +2,7 @@ package ru.elena.bobr.repository;
 
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface EntityRepository<T, K> {
@@ -15,6 +16,6 @@ public interface EntityRepository<T, K> {
 
     T save(T t);
 
-    T update(T t);
+    T update(T t) throws SQLException;
 
 }

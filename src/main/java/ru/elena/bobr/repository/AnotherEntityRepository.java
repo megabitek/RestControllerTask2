@@ -3,6 +3,7 @@ package ru.elena.bobr.repository;
 import ru.elena.bobr.model.AnotherEntity;
 import ru.elena.bobr.model.Doctor;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +21,6 @@ public interface AnotherEntityRepository extends EntityRepository<AnotherEntity,
     public AnotherEntity save(AnotherEntity anotherEntity);
 
     @Override
-    public AnotherEntity update(AnotherEntity another);
+    public AnotherEntity update(AnotherEntity another) throws SQLException;
 
 }

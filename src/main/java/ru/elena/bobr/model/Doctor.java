@@ -1,5 +1,6 @@
 package ru.elena.bobr.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -7,7 +8,7 @@ public class Doctor {
     String name;
     UUID uuid;
     String lastName;
-    List<AnotherEntity> pets;
+    List<AnotherEntity> pets= new ArrayList();
 
     public Doctor() {
     }

@@ -1,3 +1,4 @@
+/*
 package ru.elena.bobr.db;
 
 import java.sql.Connection;
@@ -10,6 +11,8 @@ public class PostrgreSQLConnection implements ConnectionManager {
     public String user= "postgres";
     public String password ="1234" ;
 
+*/
+/**//*
 
     private static Connection connection;
 
@@ -43,3 +46,4 @@ public class PostrgreSQLConnection implements ConnectionManager {
         }
     }
 }
+*/

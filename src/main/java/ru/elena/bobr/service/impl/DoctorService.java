@@ -36,7 +36,7 @@ public class DoctorService  implements IParentCrudService<AnotherEntity, Doctor>
     public Optional<Doctor> delete(UUID uuid) {
         Doctor entity = doctor_repo.findById(uuid);
         if (entity.getPets().size()>0)
-            entity.getPets().stream().forEach(other->an_repo.deleteById(other.getUuid()));
+            doctor_repo.deleteAllChildren(uuid);
         if (doctor_repo.deleteById(uuid)){
             return Optional.ofNullable(entity);
         }
@@ -63,8 +63,8 @@ public class DoctorService  implements IParentCrudService<AnotherEntity, Doctor>
     }
 
     @Override
-    public Doctor deleteChildEntity(AnotherEntity children, Doctor parent) {
-        return null;
+    public void deleteChildEntity(AnotherEntity children, Doctor parent) {
+        doctor_repo.deleteAllChildren(parent.getUuid());
     }
 }
 

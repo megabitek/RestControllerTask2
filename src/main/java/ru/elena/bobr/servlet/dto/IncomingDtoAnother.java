@@ -5,7 +5,6 @@ import java.util.UUID;
 public class IncomingDtoAnother {
     UUID id;
     String nickname;
-
     UUID ownerId;
 
     public IncomingDtoAnother(UUID id, String nickname, UUID ownerId) {
@@ -14,12 +13,16 @@ public class IncomingDtoAnother {
         this.ownerId = ownerId;
     }
 
+    public IncomingDtoAnother() {
+
+    }
+
     public UUID getOwner() {
         return ownerId;
     }
 
-    public void setOwner(String owner) {
-        this.ownerId = ownerId;
+    public void setOwner(UUID ownerid) {
+        this.ownerId = ownerid;
     }
 
     public UUID getId() {
@@ -34,7 +37,7 @@ public class IncomingDtoAnother {
         return nickname;
     }
 
-    public void setNikname(String nickname) {
+    public void setNiсkname(String nickname) {
         this.nickname = nickname;
     }
 }

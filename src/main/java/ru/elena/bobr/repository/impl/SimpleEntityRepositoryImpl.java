@@ -1,7 +1,7 @@
 package ru.elena.bobr.repository.impl;
 
 import ru.elena.bobr.db.ConnectionFactory;
-import ru.elena.bobr.db.PostrgreSQLConnection;
+//import ru.elena.bobr.db.PostrgreSQLConnection;
 import ru.elena.bobr.model.AnotherEntity;
 import ru.elena.bobr.model.SimpleEntity;
 import ru.elena.bobr.repository.IParent;
