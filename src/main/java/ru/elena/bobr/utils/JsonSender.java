@@ -6,12 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class JsonSender<T> {
+public class JsonSender {
     private Gson gson = new Gson();
 
     public void send(
             HttpServletResponse response,
-            T dto) throws IOException {
+            Object dto) throws IOException {
 
         response.setContentType("application/json");
 

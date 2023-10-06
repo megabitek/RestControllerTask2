@@ -71,7 +71,7 @@ public class DoctorRepositoryTest {
     void findAll() {
         List<Doctor> found = repository.findAll();
         Assert.assertNotNull(found);
-        Assert.assertEquals(found.size(), 3);
+        Assert.assertEquals(found.size(), 4);
     }
 
     @Test
