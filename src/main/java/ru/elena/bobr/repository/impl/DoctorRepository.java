@@ -23,7 +23,7 @@ public class DoctorRepository implements EntityRepository<Doctor, UUID>, IParent
 
     private IResultSetMapper anotherResultSetMapper = new AnotherResultSetMapperImpl();
 
-    public  Connection connection = new ConnectionFactory( "/utils/database.properties").getConnection();
+    public  Connection connection = new ConnectionFactory().getConnection();
 
     @Override
     public Doctor findById(UUID uuid) {

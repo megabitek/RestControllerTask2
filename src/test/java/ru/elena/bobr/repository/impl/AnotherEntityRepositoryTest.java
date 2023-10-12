@@ -89,8 +89,10 @@ public class AnotherEntityRepositoryTest {
 
     @Test
     void deleteById() {
-        if (repository.findById(UUID.fromString(UUIDCorrect)) != null) {
-            Assert.assertFalse(repository.deleteById(java.util.UUID.fromString(UUIDCorrect)));
+        UUID uuid = UUID.fromString(UUIDCorrect);
+        if ((repository.findById(uuid) != null)&(repository.getChildren(uuid).isEmpty())) {
+
+            Assert.assertTrue(repository.deleteById(uuid));
         }
     }
 

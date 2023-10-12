@@ -24,7 +24,7 @@ public class AnotherEntityRepositoryImpl implements AnotherEntityRepository {
     private IResultSetMapper<Doctor> doctorResultSetMapper = new DoctorResultSetMapperImpl();
 
 
-    public static  Connection connection = new ConnectionFactory("/utils/database.properties").getConnection();
+    public static  Connection connection = new ConnectionFactory().getConnection();
 
 
     @Override

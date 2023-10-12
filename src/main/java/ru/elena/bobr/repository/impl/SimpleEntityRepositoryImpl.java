@@ -21,10 +21,9 @@ public class SimpleEntityRepositoryImpl implements SimpleEntityRepository, IPare
     private IResultSetMapper simpleResultSetMapper = new SimpleResultSetMapperImpl();
     private IResultSetMapper anotherResultSetMapper = new AnotherResultSetMapperImpl();
 
-    public  Connection connection = new ConnectionFactory( "/utils/database.properties").getConnection();
+    public  Connection connection = new ConnectionFactory( ).getConnection();
 
 
-   // public Connection connection = new PostrgreSQLConnection().getConnection("jdbc:postgresql://localhost:5432/mydatabase", "postgres", "1234");
 
 
     @Override

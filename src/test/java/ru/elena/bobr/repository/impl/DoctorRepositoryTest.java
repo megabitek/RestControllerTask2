@@ -89,8 +89,9 @@ public class DoctorRepositoryTest {
 
     @Test
     void deleteById() {
-        if (repository.findById(UUID.fromString(UUIDCorrect)) != null) {
-            Assert.assertFalse(repository.deleteById(UUID.fromString(UUIDCorrect)));
+        UUID uuid = UUID.fromString(UUIDCorrect);
+        if ((repository.findById(uuid) != null)&(repository.getChildren(uuid).isEmpty())) {
+            Assert.assertTrue(repository.deleteById(uuid));
         }
     }
 

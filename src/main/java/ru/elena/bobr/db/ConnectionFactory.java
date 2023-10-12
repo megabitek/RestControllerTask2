@@ -11,14 +11,14 @@ import java.util.Properties;
 public class ConnectionFactory {
 
     private static  Connection connection;
-    private String FILE_PROPERTY_NAME;
+    private String FILE_PROPERTY_NAME= "/database.properties";
 
     private static  String url;
     private static String user;
     private static String password;
 
 
-    public  ConnectionFactory(String FILE_PROPERTY_NAME) {
+    public ConnectionFactory() {
         Properties properties = new Properties();
         InputStream in = ConnectionFactory.class.getResourceAsStream(FILE_PROPERTY_NAME);
         try {

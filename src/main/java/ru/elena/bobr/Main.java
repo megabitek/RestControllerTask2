@@ -2,7 +2,7 @@ package ru.elena.bobr;
 
 public class Main {
     public static void main(String[] args) {
-       /* ConnectionManager connectionManager= new PostrgreSQLConnection();
+       /* ConnectionPropertiesManager connectionManager= new PostrgreSQLConnection();
         try {
             Connection connection= connectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("select * from simple_entity");
