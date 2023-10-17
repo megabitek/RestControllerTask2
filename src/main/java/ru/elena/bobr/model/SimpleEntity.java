@@ -32,9 +32,7 @@ public class SimpleEntity {
         this.others = others;
     }
 
-public void addAnother( AnotherEntity another){
-        others.add(another); 
-}
+
 
     public UUID getUuid() {
         return uuid;

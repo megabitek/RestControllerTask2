@@ -45,13 +45,9 @@ public class ConnectionFactory {
         }
     }
 
-    public void setFilePropertyName(String filePropertyName) {
-        FILE_PROPERTY_NAME = filePropertyName;
-    }
 
-    public void setCommit(boolean commit) throws SQLException, Exception {
-        getConnection().setAutoCommit(commit);
-    }
+
+
 
     private Connection createConnection() {
 

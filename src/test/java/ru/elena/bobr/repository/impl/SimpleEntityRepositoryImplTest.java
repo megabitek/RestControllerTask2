@@ -59,7 +59,7 @@ class SimpleEntityRepositoryImplTest {
 
     @Test
     void findById() {
-        SimpleEntity found = repository.findById(UUID.fromString(UUIDCorrect));
+         SimpleEntity found = repository.findById(UUID.fromString(UUIDCorrect));
         Assert.assertNotNull(found);
     }
 

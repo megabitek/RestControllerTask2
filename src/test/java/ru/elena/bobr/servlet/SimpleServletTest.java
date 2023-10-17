@@ -6,6 +6,7 @@ import ru.elena.bobr.service.impl.SimpleServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import ru.elena.bobr.servlet.dto.IncomingDtoSimple;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.*;
 class SimpleServletTest {
     public   final String NAME = "vova";
     public   final UUID uuid = UUID.fromString("76bde8dd-f961-4653-85f5-bcdc4ac171f0");
-
+    public static final String ownername = "petya";
 private final SimpleServlet servlet  = new  SimpleServlet();
 private SimpleServiceImpl service =   Mockito.mock(SimpleServiceImpl.class);
 
@@ -108,10 +109,33 @@ private SimpleServiceImpl service =   Mockito.mock(SimpleServiceImpl.class);
         when(service.findById(uuid)).thenReturn(entity);
         try {
             servlet.doDelete(request, response);
+
         } catch (IOException e) {
             Assert.assertTrue(false);
         }
     }
-
+@Test
+    void doPut(){
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    HttpServletResponse response =mock(HttpServletResponse.class);
+    HashMap parameterMap = new HashMap<>();
+    parameterMap.put("id", uuid);
+    parameterMap.put("ownername", ownername);
+    when(request.getParameterMap()).thenReturn(parameterMap);
+    SimpleEntity up= new SimpleEntity();
+    up.setName(ownername);
+    up.setUuid(uuid);
+    when(request.getParameter("id")).thenReturn(uuid.toString());
+    when(request.getParameter("ownername")).thenReturn(ownername);
+    when(service.update(any())).thenReturn(up);
+    PrintWriter writer = mock(PrintWriter.class);
+    try {
+        when(response.getWriter()).thenReturn(writer);
+        servlet.doPut(request, response);
+    } catch (IOException e) {
+        Assert.assertTrue(false);
+    }
+    verify(service, times(1)).update(any());
+}
 
 }

@@ -28,7 +28,6 @@ public class DoctorRepository implements EntityRepository<Doctor, UUID>, IParent
     @Override
     public Doctor findById(UUID uuid) {
         Doctor entity = new Doctor();
-
         try {
 
             try(PreparedStatement preparedStatement = connection.prepareStatement("select * from doctor where uuid = ?")){
@@ -53,8 +52,8 @@ public class DoctorRepository implements EntityRepository<Doctor, UUID>, IParent
             } catch (SQLException e) {
                 return false;
             }
-        } else return false;
-
+        }
+        return false;
     }
 
 
@@ -126,5 +125,7 @@ public class DoctorRepository implements EntityRepository<Doctor, UUID>, IParent
             return false;
         }
     }
+
+
 }
 

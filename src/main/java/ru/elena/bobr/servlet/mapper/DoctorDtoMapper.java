@@ -19,12 +19,12 @@ public class DoctorDtoMapper implements IDtoMapper<Doctor, IncomingDtoDoctor, Ou
         return new OutGoingDtoDoctor(entity.getUuid(), entity.getName(), entity.getLastName(), entity.getPets());
     }
 
-    @Override
+ /*   @Override
     public List<Doctor> mapListIn(List<IncomingDtoDoctor> incomingDto) {
         List<Doctor> entityList = new ArrayList<Doctor>(incomingDto.size());
         incomingDto.stream().forEach(in->entityList.add(new Doctor(in.getId(), in.getName(), in.getLastname())));
         return entityList;
-    }
+    }*/
 
     @Override
     public List<OutGoingDtoDoctor> mapListOut(List<Doctor> entities) {

@@ -14,6 +14,9 @@ import java.util.UUID;
 
 public class DoctorService  implements IParentCrudService<AnotherEntity, Doctor>, ICrudService<UUID, Doctor> {
 
+    public void setDoctor_repo(DoctorRepository doctor_repo) {
+        this.doctor_repo = doctor_repo;
+    }
 
 
     DoctorRepository doctor_repo = new DoctorRepository();
@@ -35,12 +38,13 @@ public class DoctorService  implements IParentCrudService<AnotherEntity, Doctor>
     @Override
     public Optional<Doctor> delete(UUID uuid) {
         Doctor entity = doctor_repo.findById(uuid);
+    if (entity !=null){
         if (entity.getPets().size()>0)
             doctor_repo.deleteAllChildren(uuid);
         if (doctor_repo.deleteById(uuid)){
             return Optional.ofNullable(entity);
-        }
-        else return Optional.empty();
+        }}
+         return Optional.empty();
     }
 
     @Override
@@ -62,9 +66,12 @@ public class DoctorService  implements IParentCrudService<AnotherEntity, Doctor>
         return parentEntity;
     }
 
+
+
     @Override
-    public void deleteChildEntity(AnotherEntity children, Doctor parent) {
+    public void deleteAllChildren(Doctor parent) {
         doctor_repo.deleteAllChildren(parent.getUuid());
+        parent.getPets().clear();
     }
 }
 

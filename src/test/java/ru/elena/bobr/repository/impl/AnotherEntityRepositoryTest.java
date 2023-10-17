@@ -14,6 +14,7 @@ import ru.elena.bobr.model.Doctor;
 import ru.elena.bobr.model.SimpleEntity;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -123,11 +124,11 @@ public class AnotherEntityRepositoryTest {
         Assert.assertNull(entitySaved);
     }
     @Test
-    void update() {
+    void update() throws SQLException {
         AnotherEntity entity = repository.findById(UUID.fromString(UUIDCorrect));
         entity.setName(nameUpdated);
         entity.setSimple(UUID.fromString(simpleUUIDCorrect));
-        AnotherEntity entitySaved = repository.save(entity);
+        AnotherEntity entitySaved = repository.update(entity);
         Assert.assertEquals(entity.getUuid(), entitySaved.getUuid());
         Assert.assertEquals(entity.getName(), nameUpdated);
         Assert.assertEquals(entity.getSimple(), entitySaved.getSimple());
@@ -154,7 +155,8 @@ public class AnotherEntityRepositoryTest {
     void deleteChildren(){
         Assert.assertTrue(repository.deleteAllChildren(UUID.fromString(UUIDCorrect)));
     }
-   }
+
+}
 
 
 

@@ -79,7 +79,11 @@ public class DoctorRepositoryTest {
         Doctor found = repository.findById(UUID.fromString(UUIDIncorrect));
         Assert.assertNull(found);
     }
-
+    @Test
+    void findByIdException() {
+        Doctor found = repository.findById(UUID.fromString(UUIDIncorrect));
+        Assert.assertNull(found);
+    }
     @Test
     void deleteByIdChildfree() {
         if (repository.findById(UUID.fromString(childfree)) != null) {
@@ -112,12 +116,11 @@ public class DoctorRepositoryTest {
         Assert.assertEquals(entity.getLastName(), entitySaved.getLastName());
     }
 
-
     @Test
     void update() {
         Doctor entity = repository.findById(UUID.fromString(UUIDCorrect));
         entity.setName(nameUpdated);
-        Doctor entitySaved = repository.save(entity);
+        Doctor entitySaved = repository.update(entity);
         Assert.assertEquals(entity.getUuid(), entitySaved.getUuid());
         Assert.assertEquals(entity.getName(), nameUpdated);
 

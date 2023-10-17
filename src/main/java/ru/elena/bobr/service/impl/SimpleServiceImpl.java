@@ -75,9 +75,12 @@ public class SimpleServiceImpl implements IParentCrudService<AnotherEntity, Simp
         return parentEntity;
     }
 
+
+
     @Override
-    public void deleteChildEntity(AnotherEntity children, SimpleEntity parent) {
-        repository.deleteAllChildren(parent.getUuid());
+    public void deleteAllChildren(SimpleEntity parent) {
+repository.deleteAllChildren(parent.getUuid());
+parent.getOthers().clear();
     }
 
 

@@ -36,19 +36,6 @@ public class SimpleServlet extends HttpServlet {
 
 
 
-    private void sendAsJson(
-            HttpServletResponse response,
-            Object dto) throws IOException {
-
-        response.setContentType("application/json");
-
-        String res = gson.toJson(dto);
-
-        PrintWriter out = response.getWriter();
-
-        out.print(res);
-        out.flush();
-    }
 
     @Override
     /**Find one

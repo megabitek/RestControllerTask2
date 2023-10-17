@@ -18,27 +18,5 @@ public class OutGoingDtoSimple {
         this.pets=pets;
     }
 
-    public List getPets() {
-        return pets;
-    }
 
-    public void setPets(List pets) {
-        this.pets = pets;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
 }

@@ -24,19 +24,19 @@ public class AnotherEntityRepositoryImpl implements AnotherEntityRepository {
     private IResultSetMapper<Doctor> doctorResultSetMapper = new DoctorResultSetMapperImpl();
 
 
-    public static  Connection connection = new ConnectionFactory().getConnection();
+    public static Connection connection = new ConnectionFactory().getConnection();
 
 
     @Override
     public AnotherEntity findById(UUID id) {
         AnotherEntity entity = new AnotherEntity();
         try {
-
-           try( PreparedStatement preparedStatement = connection.prepareStatement("select * from anothers where uuid = ?")) {
-            preparedStatement.setObject(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            entity =  anotherResultSetMapper.map(resultSet);
-            return entity;}
+            try (PreparedStatement preparedStatement = connection.prepareStatement("select * from anothers where uuid = ?")) {
+                preparedStatement.setObject(1, id);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                entity = anotherResultSetMapper.map(resultSet);
+                return entity;
+            }
         } catch (SQLException e) {
             return null;
         }
@@ -46,12 +46,13 @@ public class AnotherEntityRepositoryImpl implements AnotherEntityRepository {
     public boolean deleteById(UUID id) {
 
         try {
-try
+            try
 
-        (  PreparedStatement preparedStatement = connection.prepareStatement("delete from anothers where uuid = ?")){
-            preparedStatement.setObject(1, id);
-            preparedStatement.execute();
-            return true;}
+                    (PreparedStatement preparedStatement = connection.prepareStatement("delete from anothers where uuid = ?")) {
+                preparedStatement.setObject(1, id);
+                preparedStatement.execute();
+                return true;
+            }
         } catch (SQLException e) {
             return false;
         }
@@ -59,17 +60,18 @@ try
 
     @Override
     public List<AnotherEntity> findAll() {
-        List<AnotherEntity>  allEntities= new ArrayList<>();
+        List<AnotherEntity> allEntities = new ArrayList<>();
         try {
-try
-        (PreparedStatement preparedStatement = connection.prepareStatement("select * from anothers")) {
-    ResultSet resultSet = preparedStatement.executeQuery();
-    allEntities = anotherResultSetMapper.mapList(resultSet);}
-
+            try
+                    (PreparedStatement preparedStatement = connection.prepareStatement("select * from anothers")) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                allEntities = anotherResultSetMapper.mapList(resultSet);
+            }
+            return allEntities;
         } catch (SQLException e) {
-            return  allEntities;
+            return allEntities;
         }
-        return  allEntities;
+
     }
 
 
@@ -77,11 +79,12 @@ try
     public AnotherEntity save(AnotherEntity another) {
         try {
 
-          try(PreparedStatement preparedStatement = connection.prepareStatement("insert into anothers ( name, simple_uuid) values( ?, ?)")){
-            preparedStatement.setString(1, another.getName());
-            preparedStatement.setObject(2, another.getSimple());
-            preparedStatement.execute();
-            return another;}
+            try (PreparedStatement preparedStatement = connection.prepareStatement("insert into anothers ( name, simple_uuid) values( ?, ?)")) {
+                preparedStatement.setString(1, another.getName());
+                preparedStatement.setObject(2, another.getSimple());
+                preparedStatement.execute();
+                return another;
+            }
         } catch (SQLException e) {
             return null;
         }
@@ -98,7 +101,7 @@ try
                 return another;
             }
         } catch (SQLException e) {
-            throw  new SQLException("Wrong entity parameters for update");
+            return null;
         }
     }
 
@@ -117,7 +120,7 @@ try
                 }
             }
         } catch (SQLException e) {
-            return   doctors;
+            return doctors;
         }
     }
 
@@ -135,6 +138,8 @@ try
         }
 
     }
+
+
 }
 
 

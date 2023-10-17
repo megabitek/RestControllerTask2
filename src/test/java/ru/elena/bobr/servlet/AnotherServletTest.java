@@ -31,6 +31,7 @@ import static org.mockito.Mockito.times;
 
     public final UUID uuid = UUID.fromString("7f9e408a-1b30-47f6-aace-482dc0854115");
 
+    public final UUID OwnerIdCorrect = UUID.fromString("11111111-6666-3333-4444-555555555555");
     public final String NAME = "bob";
 
     @BeforeEach
@@ -124,4 +125,32 @@ import static org.mockito.Mockito.times;
 
 
     }
+
+     @Test
+     void doPut(){
+         HttpServletRequest request = mock(HttpServletRequest.class);
+         HttpServletResponse response =mock(HttpServletResponse.class);
+         HashMap parameterMap = new HashMap<>();
+       /* parameterMap.put("id", UuidCorrect);
+        parameterMap.put("name", NameExist);
+        parameterMap.put("lastname", LastNameNew);*/
+         when(request.getParameterMap()).thenReturn(parameterMap);
+         AnotherEntity up= new AnotherEntity();
+         up.setName(NAME);
+         up.setUuid(uuid);
+         up.setSimple(OwnerIdCorrect);
+         when(request.getParameter("id")).thenReturn(uuid.toString());
+         when(request.getParameter("nickname")).thenReturn(NAME);
+         when(request.getParameter("ownerid")).thenReturn(OwnerIdCorrect.toString());
+
+         when(service.update(any())).thenReturn(up);
+         PrintWriter writer = mock(PrintWriter.class);
+         try {
+             when(response.getWriter()).thenReturn(writer);
+             servlet.doPut(request, response);
+         } catch (IOException e) {
+             Assert.assertTrue(false);
+         }
+         verify(service, times(1)).update(any());
+     }
 }

@@ -108,5 +108,29 @@ public class DoctorServletTest {
         }
     }
 
-
+    @Test
+    void doPut(){
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response =mock(HttpServletResponse.class);
+        HashMap parameterMap = new HashMap<>();
+       /* parameterMap.put("id", UuidCorrect);
+        parameterMap.put("name", NameExist);
+        parameterMap.put("lastname", LastNameNew);*/
+        when(request.getParameterMap()).thenReturn(parameterMap);
+        Doctor up= new Doctor();
+        up.setName(NameExist);
+        up.setUuid(UuidCorrect);
+        when(request.getParameter("id")).thenReturn(UuidCorrect.toString());
+        when(request.getParameter("ownername")).thenReturn(NameExist);
+        when(request.getParameter("lastname")).thenReturn(LastNameNew);
+        when(service.update(any())).thenReturn(up);
+        PrintWriter writer = mock(PrintWriter.class);
+        try {
+            when(response.getWriter()).thenReturn(writer);
+            servlet.doPut(request, response);
+        } catch (IOException e) {
+            Assert.assertTrue(false);
+        }
+        verify(service, times(1)).update(any());
+    }
 }

@@ -21,8 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -114,10 +113,10 @@ public class AnotherServlet extends HttpServlet {
         } catch (IOException e) {
             try {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Creating failed " + e.getMessage());
+
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-
         }
     }
 
@@ -159,7 +158,7 @@ public class AnotherServlet extends HttpServlet {
                 HttpServletResponse response) throws IOException {
             // Analyze the servlet exception
 
-            try (PrintWriter writer = response.getWriter()) {
+       /*     try (PrintWriter writer = response.getWriter()) {
                 writer.write("<html><head><title>Error description</title></head><body>");
                 writer.write("<h2>Error description</h2>");
                 writer.write("<ul>");
@@ -209,6 +208,6 @@ public class AnotherServlet extends HttpServlet {
 
             out.write("<br><br>");
             out.write("<a href=\"index.html\">Home Page</a>");
-            out.write("</body></html>");
+            out.write("</body></html>");*/
         }
 }

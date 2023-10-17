@@ -19,35 +19,10 @@ public class OutGoingDtoAnother {
         this.doctors = doctors;
     }
 
-    public OutGoingDtoAnother(UUID id, String nickname, UUID ownerId) {
-        this.id = id;
-        this.nickname = nickname;
-        this.doctors=doctors;
-    }
 
-    public List getPets() {
-        return doctors;
-    }
 
-    public void setdoctors(List doctors) {
-        this.doctors = doctors;
-    }
 
-    public UUID getId() {
-        return id;
-    }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
 }
 
 

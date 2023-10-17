@@ -8,14 +8,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import ru.elena.bobr.model.AnotherEntity;
 import ru.elena.bobr.model.Doctor;
-import ru.elena.bobr.repository.AnotherEntityRepository;
+
 import ru.elena.bobr.repository.impl.AnotherEntityRepositoryImpl;
 import ru.elena.bobr.repository.impl.DoctorRepository;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
 
-import static org.mockito.Mockito.when;
+
+import static org.mockito.Mockito.*;
+
 
 public class AnotherServiceTest {
 
@@ -44,7 +45,7 @@ public class AnotherServiceTest {
         entity.setSimple(SimpleUUIDCorrect);
         when(repository.findById(uuidExist)).thenReturn(entity);
         when(repository.deleteById(uuidExist)).thenReturn(true);
-       //when(repository.save(entity)).thenReturn(entity);
+
     }
 
     @Test
@@ -53,7 +54,7 @@ public class AnotherServiceTest {
         entity.setName(NAME);
         entity.setUuid(UUID.randomUUID());
         entity.setSimple(SimpleUUIDCorrect);
-      //  when(repository.findById(uuidExist)).thenReturn(entity);
+
         when(repository.save(entity)).thenReturn(entity);
             AnotherEntity saved = service.save(entity);
             Assert.assertNotNull(saved);
@@ -81,10 +82,41 @@ public class AnotherServiceTest {
         when(repository.findById(uuidExist)).thenReturn(entity);
         when(repository.getChildren(uuidExist)).thenReturn(new ArrayList<Doctor>());
         when(repository.deleteById(uuidExist)).thenReturn(true);
-       // AnotherEntity deleted = service.delete(uuidExist);
+       Assert.assertTrue(service.delete(uuidExist).isPresent());
       //  Assert.assertEquals(entity.getUuid(), deleted.getUuid());
      //   Assert.assertEquals(entity.getName(), deleted.getName());
     }
+    @Test
+    void findAll(){
+        List<AnotherEntity> anotherEntityList = new ArrayList<>();
+        when(repository.findAll()).thenReturn(anotherEntityList);
+        Assert.assertNotNull(service.findAll());
+
+    }
+    @Test
+    void deleteAllChildren(){
+        AnotherEntity entity = new AnotherEntity();
+        entity.setName(NAME);
+        entity.setUuid(uuidExist);
+        List<Doctor> docList = new ArrayList<>();
+        docList.add(0, new Doctor( UUID.randomUUID(), "petr", "petrov"));
+        entity.setDoctors(docList);
+        service.deleteAllChildren(entity);
+        Assert.assertEquals(entity.getDoctors().size(), 0);
+
+}
+    @Test
+    void addChildEntity() {
+        AnotherEntity entity = new AnotherEntity();
+        entity.setName(NAME);
+        entity.setUuid(uuidExist);
+        Doctor childEntity = new Doctor();
+        childEntity.setName("Fedor");
+        childEntity.setUuid(UUID.randomUUID());
+        service.addChildEntity( childEntity, entity);
+        Assert.assertEquals(entity.getDoctors().size(), 1);
+    }
+
 
 }
 

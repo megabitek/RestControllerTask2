@@ -7,7 +7,7 @@ public interface IDtoMapper <T, I, O>{
 
       O mapOut(T entity);
 
-     List<T> mapListIn(List<I> incomingDto);
+    /* List<T> mapListIn(List<I> incomingDto);*/
 
     List<O> mapListOut(List<T> entities);
 }

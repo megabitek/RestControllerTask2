@@ -77,9 +77,13 @@ public class AnotherCrudServiceImpl implements IParentCrudService<Doctor, Anothe
         return entity;
     }
 
+
+
     @Override
-    public void deleteChildEntity(Doctor children, AnotherEntity parent) {
-          repository.deleteAllChildren(parent.getUuid());
+    public void deleteAllChildren(AnotherEntity parent) {
+        repository.deleteAllChildren(parent.getUuid());
+        parent.getDoctors().clear();
     }
-}
+    }
+
 
